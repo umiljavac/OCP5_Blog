@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<routes>
+    <route url="/accueil" view="accueil"></route>
+    <route url="/index" view="index"></route>
+    <route url="/blogPost/([0-9]+)" view="showBlogPost" var="id"></route>
+    <route url="/blogPost/insert" view="insertBlogPost"></route>
+    <route url="/blogPost/update/([0-9]+)" view="updateBlogPost" var="id"></route>
+    <route url="/blogPost/delete/([0-9]+)" view="deleteBlogPost" var="id"></route>
+    <route url="/comment/insert/([0-9]+)" view="insertComment" var="blogPost"></route>
+    <route url="/comment/update/([0-9]+)" view="updateComment" var="id"></route>
+    <route url="/comment/delete/([0-9]+)" view="deleteComment" var="id"></route>
+</routes>
