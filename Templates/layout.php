@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Entrée Libre</title>
+    <title>Entrez Libres</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -112,7 +112,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    Copyright &copy; Entrée libre 2017
+                    Copyright &copy; Entrez Libres 2017
                 </div>
             </div>
         </div>
