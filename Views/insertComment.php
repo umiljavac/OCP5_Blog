@@ -14,7 +14,7 @@
                 <label for="contenu">Contenu du commentaire : </label>
                 <textarea id="contenu" rows="5" name="contenu" type="textarea" class="form-control"><?php if (isset($_POST['contenu'])) echo $_POST['contenu']?></textarea>
             </div>
-            <button class="btn ajouter" type="submit">Envoyer</button>
+            <button class="btn envoyer" type="submit">Envoyer</button>
         </form>
     </div>
 </div>

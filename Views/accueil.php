@@ -1,14 +1,13 @@
 <!-- Header -->
 <header>
-    <img class="full-img" src="img/tree.jpg">
-    <img class="full-img carte" src="img/carte1.png">
+    <img class="full-img" src="img/photo-accueil.png">
      <div class="container" id="ulm">
         <div class="row">
             <div class="col-lg-offset-3 col-lg-6">
                 <div class="intro-text">
                     <span class="name">Ulrich Miljavac</span>
                     <div class="divLogo">
-                        <img class="text-center logoBody" src="img/logo3min.png">
+                        <img class="text-center logoBody" src="img/logo3min.png" alt="logo">
                     </div>
                     <span class="skills">J'utilise HTML pour le dire, CSS pour y mettre la forme, Javascript pour ouvrir des perspectives, PHP pour dialoguer avec le fond des choses, SQL pour ne rien oublier. </span>
                 </div>
@@ -18,6 +17,8 @@
 
 </header>
 
+<img class="full-img border" src="img/tree-slice4.jpg">
+
 <!-- About Section -->
 <section class="success" id="about">
     <div class="container">
@@ -25,16 +26,16 @@
             <div class="col-lg-12 text-center">
                 <h2 class="about">A propos</h2>
                 <div class="divLogo">
-                    <img class="text-center logoBody" src="img/logo3min.png">
+                    <img class="logoBody" src="img/logo3min.png">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-4 col-lg-offset-2">
-                <p>Ce blog est le résultat d'une volonté personnelle de reconversion professionnelle. Cette volonté est née d'une envie simple : allier nécessité et passion, travailler en aimant son travail. Pour y parvenir, je me suis inscrit à la formation "développeur d'application PHP/Symfony" chez OpenClassrooms. C'est une formation qui demande beaucoup d'autonomie, un esprit ouvert et une volonté sans faille.</p>
+                <p class="reduce">Ce blog est le résultat d'une volonté personnelle de reconversion professionnelle. Cette volonté est née d'une envie simple : allier nécessité et passion, travailler en aimant son travail. Pour y parvenir, je me suis inscrit à la formation <a style="color: black; font-weight: bold" href="https://openclassrooms.com/paths/developpeur-se-d-application-php-symfony">" Développeur d'application PHP/Symfony "</a> chez OpenClassrooms. C'est une formation qui demande beaucoup d'autonomie, un esprit ouvert et une motivation sans faille.</p>
             </div>
             <div class="col-lg-4">
-                <p>Sur 9 projets à réaliser durant la formation, ce blog est le cinquième et représente une mise en pratique concrète de mes connaissances actuelles dans le développement web. Il nous est demandé de créer un blog sans utiliser de librairies/frameworks externes. Chaque visiteur peut créer, modifier, supprimer du contenu. Ici, tout est donc accessible et ouvert : Entrez Libres </p>
+                <p class="reduce">Sur 9 projets à réaliser durant la formation, ce blog est le cinquième et représente une mise en pratique concrète de mes connaissances actuelles dans le développement web. Il nous est demandé de créer un blog sans utiliser de librairies/frameworks externes. Chaque visiteur peut créer, modifier, supprimer du contenu. Ici, tout est donc accessible et ouvert : Entrez Libres </p>
             </div>
             <div class="col-lg-8 col-lg-offset-2 text-center">
                 <a href="#" class="btn btn-lg btn-outline">
@@ -45,13 +46,16 @@
     </div>
 </section>
 
+<img class="full-img border" src="img/frise-slice3.png">
 <!-- Contact Section -->
 <section id="contact">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Contact</h2>
-                <hr class="star-primary">
+                <h2 class="about">Contact</h2>
+                <div class="divLogo">
+                    <img class="logoBody" src="img/logo3min.png">
+                </div>
             </div>
         </div>
         <div class="row">

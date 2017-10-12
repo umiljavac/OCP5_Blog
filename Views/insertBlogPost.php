@@ -19,7 +19,7 @@
                 <label for="contenu">Contenu : </label>
                 <textarea id="contenu" rows="10" type="textarea" name="contenu" class="form-control"><?php if (isset($_POST['contenu'])) echo $_POST['contenu'] ?></textarea>
             </div>
-            <button class="btn ajouter" type="submit">Envoyer</button>
+            <button class="btn envoyer" type="submit">Ajouter</button>
         </form>
     </div>
 </div>

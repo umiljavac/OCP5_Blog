@@ -19,7 +19,7 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-    color: orange;
+    color: darkcyan;
     outline: none;
 }
 h1,
@@ -51,22 +51,7 @@ hr.star-primary:after {
     font-size: 2em;
     padding: 0 0.25em;
 }
-hr.star-light {
-    border-color: black;
-    color: darkcyan;
-}
-hr.star-light:after {
-    background-color: white;
-    color: darkcyan;
-}
-hr.star-primary {
-    border-color: darkcyan;
-    color: darkcyan;
-}
-hr.star-primary:after {
-    background-color: black;
-    color: orange;
-}
+
 .img-centered {
     margin: 0 auto;
 }
@@ -75,7 +60,7 @@ header {
     background-color: white;
 }
 header .container {
-    padding-top: 100px;
+    padding-top: 75px;
     padding-bottom: 50px;
 }
 header img {
@@ -201,19 +186,20 @@ section h2 {
     font-size: 3em;
 }
 section.success {
-    /*background: #18BC9C;
-    color: white;*/
-    background: white;
+    background: darkcyan;
+    color: white;
 }
 @media (max-width: 767px) {
     section {
-        padding: 75px 0;
+        padding: 50px 0;
     }
-    section.first {
-        padding-top: 75px;
-    }
+
     .row{
         margin: 0 5px;
+    }
+    .reduce {
+        font-size: 1.25em;
+        text-align: center;
     }
 }
 
@@ -261,7 +247,7 @@ section.success {
     opacity: 1;
 }
 .floating-label-form-group-with-focus label {
-    color: cyan;
+    color:#d19e40
 }
 form .row:first-child .floating-label-form-group {
     border-top: 1px solid #eeeeee;
@@ -302,7 +288,7 @@ footer .footer-below {
 .btn-outline.active {
     color: #18BC9C;
     background: white;
-    border: solid 2px orange;
+    border: solid 2px #d19e40 ;
 }
 .btn-primary {
     color: white;
@@ -500,13 +486,12 @@ fieldset[disabled] .btn-success.active {
 
 .blogPostList {
     padding: 10px;
-   /* background-color: #f5f5f5; */
     margin: 20px 0;
     box-shadow: 1px 3px 8px 1px black;
 }
 
 .titreBlogPostList {
-    border-bottom: 5px solid darkcyan;
+    border-bottom: 5px solid grey;
     color: black;
     padding: 5px;
     line-height: 50px;
@@ -561,7 +546,8 @@ fieldset[disabled] .btn-success.active {
 }
 
 .border {
-    border: 3px solid black;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
 }
 
 .anim {
@@ -583,19 +569,23 @@ fieldset[disabled] .btn-success.active {
 
 
 .modifier {
-    background-color: black;
-    color: orange;
+    background-color: #d19e40 ;
+    color: white;
+    font-weight: bold;
     width: 78px;
 }
 
 .supprimer {
-    background-color: black;
-    color: red;
+    background-color: darkred;
+    color: white;
+    font-weight: bold;
+
 }
 
 .ajouter {
-    background-color: black;
-    color: cyan;
+    background-color: #d19e40 ;
+    color: white;
+    font-weight: bold;
 }
 
 .envoyer {
@@ -606,8 +596,8 @@ fieldset[disabled] .btn-success.active {
 
 
 #contact {
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: darkcyan;
     margin-bottom: -100px;
 }
 
@@ -619,10 +609,7 @@ a:focus, a:hover {
     width: 100%;
 }
 
-.carte {
-    position: absolute;
-    top: 100px;
-}
+
 
 #about {
 }
@@ -635,6 +622,7 @@ a:focus, a:hover {
     border: 2px solid black;
     border-radius: 10%;
     padding: 5px;
+    background-color: white;
 }
 
 .nameCustom {
