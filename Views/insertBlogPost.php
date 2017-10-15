@@ -1,5 +1,8 @@
 <div class="container marginTop">
     <div class="row">
+        <div class="divLogo">
+            <img class="logoBody" src="/img/logo3min.png">
+        </div>
         <?php if(($_SERVER['REQUEST_METHOD'] == 'POST') && $user->hasMessage()) echo '<p class="col-md-offset-2 col-md-8 col-sm-12 warning">',$user->getMessage(),'</p>'; ?>
         <form class="col-md-offset-2 col-md-8 col-sm-12" action="" method="post">
             <legend>Ajouter un blogpost</legend>

@@ -1,13 +1,13 @@
 <!-- Header -->
 <header>
-    <img class="full-img" src="img/photo-accueil.png">
+    <img class="full-img" src="/img/photo-accueil.png" alt="photo-accueil">
      <div class="container" id="ulm">
         <div class="row">
             <div class="col-lg-offset-3 col-lg-6">
                 <div class="intro-text">
                     <span class="name">Ulrich Miljavac</span>
                     <div class="divLogo">
-                        <img class="text-center logoBody" src="img/logo3min.png" alt="logo">
+                        <img class="logoBody" src="/img/logo3min.png" alt="logo">
                     </div>
                     <span class="skills">J'utilise HTML pour le dire, CSS pour y mettre la forme, Javascript pour ouvrir des perspectives, PHP pour dialoguer avec le fond des choses, SQL pour ne rien oublier. </span>
                 </div>
@@ -17,7 +17,7 @@
 
 </header>
 
-<img class="full-img border" src="img/tree-slice4.jpg">
+<img class="full-img border" src="/img/tree-slice4.jpg">
 
 <!-- About Section -->
 <section class="success" id="about">
@@ -26,7 +26,7 @@
             <div class="col-lg-12 text-center">
                 <h2 class="about">A propos</h2>
                 <div class="divLogo">
-                    <img class="logoBody" src="img/logo3min.png">
+                    <img class="logoBody" src="/img/logo3.png">
                 </div>
             </div>
         </div>
@@ -38,15 +38,15 @@
                 <p class="reduce">Sur 9 projets à réaliser durant la formation, ce blog est le cinquième et représente une mise en pratique concrète de mes connaissances actuelles dans le développement web. Il nous est demandé de créer un blog sans utiliser de librairies/frameworks externes. Chaque visiteur peut créer, modifier, supprimer du contenu. Ici, tout est donc accessible et ouvert : Entrez Libres </p>
             </div>
             <div class="col-lg-8 col-lg-offset-2 text-center">
-                <a href="#" class="btn btn-lg btn-outline">
-                    <i class="fa fa-download"></i> Download Theme
+                <a href="/img/ulrich_miljavac_cv.pdf" class="btn btn-lg btn-outline">
+                    <i class="fa fa-download"></i> Télécharger mon CV
                 </a>
             </div>
         </div>
     </div>
 </section>
 
-<img class="full-img border" src="img/frise-slice3.png">
+<img class="full-img border" src="/img/frise-slice3.png">
 <!-- Contact Section -->
 <section id="contact">
     <div class="container">
@@ -54,7 +54,7 @@
             <div class="col-lg-12 text-center">
                 <h2 class="about">Contact</h2>
                 <div class="divLogo">
-                    <img class="logoBody" src="img/logo3min.png">
+                    <img class="logoBody" src="/img/logo3min.png">
                 </div>
             </div>
         </div>

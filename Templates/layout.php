@@ -21,6 +21,7 @@
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"> <!-- remettre font-awesome.min.css après l'avoir linéarisé -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Gruppo" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -103,7 +104,7 @@
                 </div>
                 <div class="footer-col col-md-4">
                     <h4>Mon CV</h4>
-                    <p>Cliquer sur le lien pour télécharger mon CV au format PDF <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                    <p>Cliquer sur le lien pour télécharger mon CV au format PDF <a href="/img/ulrich_miljavac_cv.pdf">Ulrich Miljavac</a>.</p>
                 </div>
             </div>
         </div>
