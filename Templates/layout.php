@@ -52,7 +52,7 @@
                     <a href="#page-top"></a>
                 </li>
                 <li>
-                    <a href="/index">BlogPost</a>
+                    <a href="/index/1">BlogPost</a>
                 </li>
                 <li>
                     <a href="/blogPost/insert">Ecrire un BlogPost</a>
@@ -141,7 +141,7 @@
 <script src="/js/contact_me.js"></script>
 
 <!-- Theme JavaScript -->
-<script src="/js/freelancer.min.js"></script>
+<script src="/js/freelancer.js"></script> <!-- remettre le fichier min -->
 
 </body>
 

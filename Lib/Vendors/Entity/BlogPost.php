@@ -15,8 +15,8 @@ class BlogPost extends Entity
     protected $titre;
     protected $chapo;
 
-    const TITRE_INVALIDE = 'le champs "titre" est vide ou invalide';
-    const CHAPO_INVALIDE = 'le champs "chapô" est vide ou invalide';
+    const TITRE_INVALIDE = 'le champs "titre" est vide';
+    const CHAPO_INVALIDE = 'le champs "chapô" est vide';
 
     public function isValid()
     {

@@ -11,14 +11,14 @@ class Route
 {
     protected $url;
     protected $view;
-    protected $varName;
-    protected $varValue;
+    protected $varsNames;
+    protected $vars = [];
 
-    public function __construct($url, $view, $varName)
+    public function __construct($url, $view, array $varsNames)
     {
         $this->setUrl($url);
         $this->setView($view);
-        $this->setVarName($varName);
+        $this->setVarsNames($varsNames);
     }
 
     public function matchUrl($url)
@@ -36,14 +36,7 @@ class Route
 
     public function hasVar()
     {
-        if (!empty($this->varName()))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return !empty($this->varsNames());
     }
 
     public function setUrl($url)
@@ -62,17 +55,14 @@ class Route
         }
     }
 
-    public function setVarName($varName)
+    public function setVarsNames( array $varsNames)
     {
-        if(is_string($varName))
-        {
-            $this->varName = $varName;
-        }
+        $this->varsNames = $varsNames;
     }
 
-    public function setVarValue($varValue)
+    public function setVars( array $vars)
     {
-        $this->varValue = $varValue;
+        $this->vars = $vars;
     }
 
     public function view()
@@ -80,14 +70,14 @@ class Route
         return $this->view;
     }
 
-    public function varName()
+    public function varsNames()
     {
-        return $this->varName;
+        return $this->varsNames;
     }
 
-    public function varValue()
+    public function vars()
     {
-        return $this->varValue;
+        return $this->vars;
     }
 
 }

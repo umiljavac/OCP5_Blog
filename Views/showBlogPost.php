@@ -52,7 +52,18 @@
                 </div>
                 <?php
             }
-        ?>
+            ?>
+            <div class="row pagination">
+                <?php
+                $numeroPage = 1;
+
+                for ($i = 1; $i <= $nbCommentaires; $i += $config->getConfig('comments')) {
+                    ?>
+                    <a href="/blogPost/<?= $blogPost['id'] ?>/page/<?= $numeroPage ?>"><button class="btn-page"><?= $numeroPage?></button></a>
+                    <?php $numeroPage++;
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>

@@ -359,7 +359,7 @@ footer .footer-below {
     border-radius: 5px;
     border: 2px solid black;
     background-color: black;
-    opacity: 0.8;
+    opacity: 0.85;
     font-family: 'Lato', cursive;
     color: white;
 }
@@ -538,4 +538,12 @@ a:focus, a:hover {
  .erreur {
      padding: 60px 0;
  }
+
+.btn-page:hover {
+    background-color: darkcyan;
+    border-radius: 5px;
+    width: 38px;
+    color: white;
+    border: none;
+}
 

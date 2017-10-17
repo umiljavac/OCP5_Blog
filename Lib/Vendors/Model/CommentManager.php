@@ -60,9 +60,10 @@ class CommentManager extends Manager
         return $blogPost;
     }
 
-    public function getList($blogPost)
+    public function getList($blogPost, $limit, $offset)
     {
-        $req = $this->db->prepare('SELECT * FROM Comment WHERE blogPost = :blogPost ORDER BY id DESC');
+        $offset --;
+        $req = $this->db->prepare('SELECT * FROM Comment WHERE blogPost = :blogPost ORDER BY id DESC LIMIT ' . (int) $limit. ' OFFSET ' .  (int) ($limit * $offset));
         $req->bindValue(':blogPost', (int) $blogPost, \PDO::PARAM_INT);
         $req->execute();
 
@@ -77,8 +78,8 @@ class CommentManager extends Manager
         return $commentList;
     }
 
-    public function count()
+    public function count($id)
     {
-        return $this->db->query('SELECT COUNT(*) FROM Comment')->fetchColumn();
+        return $this->db->query('SELECT COUNT(*) FROM Comment WHERE blogPost = ' . (int) $id)->fetchColumn();
     }
 }
