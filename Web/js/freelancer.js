@@ -43,3 +43,22 @@
 
 })(jQuery); // End of use strict
 
+var url = document.location.href;
+/\/([0-9]+)$/.exec(url);
+var page = RegExp.$1;
+
+var boutons = document.getElementsByClassName("btn-page");
+for (var i = 0; i < boutons.length; i++) {
+    if (boutons[i].textContent === page)
+    {
+        var btn = boutons[i].style;
+        btn.backgroundColor = "orange";
+        btn.color = "white";
+        btn.border = "none";
+        btn.width = "35px";
+        btn.borderRadius = "5px";
+
+
+
+    }
+}

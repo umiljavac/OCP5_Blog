@@ -173,10 +173,10 @@ class Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $blogPost = new BlogPost([
-                'titre' => $_POST['titre'],
-                'auteur' => $_POST['auteur'],
-                'chapo' => $_POST['chapo'],
-                'contenu' => $_POST['contenu'],
+                'titre' => $this->postData('titre'),
+                'auteur' => $this->postData('auteur'),
+                'chapo' => $this->postData('chapo'),
+                'contenu' => $this->postData('contenu'),
                 'id' => $this->getData('id')
             ]);
 
@@ -213,8 +213,8 @@ class Controller
         {
             $comment = new Comment([
                 'blogPost' => $this->getData('blogPost'),
-                'auteur' => $_POST['auteur'],
-                'contenu' => $_POST['contenu']
+                'auteur' => $this->postData('auteur'),
+                'contenu' => $this->postData('contenu')
             ]);
 
             if ($comment->isValid())
@@ -256,8 +256,8 @@ class Controller
             $comment = new Comment([
                'id' => $this->getData('id'),
                'blogPost' => $blogPostId,
-               'auteur' => $_POST['auteur'],
-               'contenu' => $_POST['contenu']
+               'auteur' => $this->postData('auteur'),
+               'contenu' => $this->postData('contenu')
             ]);
 
             if ($comment->isValid())

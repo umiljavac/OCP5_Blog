@@ -35,7 +35,7 @@
                 <p class="reduce">Ce blog est le résultat d'une volonté personnelle de reconversion professionnelle. Cette volonté est née d'une envie simple : allier nécessité et passion, travailler en aimant son travail. Pour y parvenir, je me suis inscrit à la formation <a style="color: black; font-weight: bold" href="https://openclassrooms.com/paths/developpeur-se-d-application-php-symfony">" Développeur d'application PHP/Symfony "</a> chez OpenClassrooms. C'est une formation qui demande beaucoup d'autonomie, un esprit ouvert et une motivation sans faille.</p>
             </div>
             <div class="col-lg-4">
-                <p class="reduce">Sur 9 projets à réaliser durant la formation, ce blog est le cinquième et représente une mise en pratique concrète de mes connaissances actuelles dans le développement web. Il nous est demandé de créer un blog sans utiliser de librairies/frameworks externes. Chaque visiteur peut créer, modifier, supprimer du contenu. Ici, tout est donc accessible et ouvert : Entrez Libres </p>
+                <p class="reduce">Sur 9 projets à réaliser durant la formation, ce blog est le cinquième et représente une mise en pratique concrète de mes connaissances actuelles dans le développement web. Il nous est demandé de créer un blog sans utiliser de librairies/frameworks externes. Chaque visiteur peut créer, modifier, supprimer du contenu. Ici, tout est donc accessible et ouvert : Entrez Libres !</p>
             </div>
             <div class="col-lg-8 col-lg-offset-2 text-center">
                 <a href="/img/ulrich_miljavac_cv.pdf" class="btn btn-lg btn-outline">

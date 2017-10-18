@@ -57,7 +57,7 @@ class BlogPostManager extends Manager
     public function getList($limit, $offset)
     {
         $offset --;
-       $req = $this->db->query('SELECT id, titre, auteur, chapo, contenu, dateAjout, dateModif FROM BlogPost ORDER BY id DESC LIMIT ' . (int) $limit .' OFFSET ' . (int) ($offset * $limit));
+        $req = $this->db->query('SELECT id, titre, auteur, chapo, contenu, dateAjout, dateModif FROM BlogPost ORDER BY id DESC LIMIT ' . (int) $limit .' OFFSET ' . (int) ($offset * $limit));
         $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\BlogPost');
         $blogPostList = $req->fetchAll();
 
