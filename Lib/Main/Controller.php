@@ -23,6 +23,7 @@ class Controller
 
     public function run()
     {
+        $this->config = new Config;
         $this->user = new User;
         $this->page = new Page;
         $this->visitorRequest = $_SERVER['REQUEST_URI'];
@@ -33,36 +34,43 @@ class Controller
 
     public function getMatchedRoute()
     {
-        // je charge le tableau des routes avec les routes du fichier xml
         $xml = new \DOMDocument();
         $xml->load(__DIR__.'/../../Config/routes.xml');
         $xmlRoutes = $xml->getElementsByTagName('route');
 
         foreach ($xmlRoutes as $route)
         {
-            $varName = '';
+            $vars = [];
 
-            if ($route->hasAttribute('var'))
+            if ($route->hasAttribute('vars'))
             {
-                $varName = $route->getAttribute('var');
+                $vars =  explode(',', $route->getAttribute('vars'));
             }
 
-            $this->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('view'), $varName));
+            $this->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('view'), $vars));
         }
-
-        // je cherche la bonne route dans le tableau
 
         foreach ($this->routes as $route) {
 
-                if (($matchedRoute = $route->matchUrl($this->visitorRequest())) !== false) // si la route correspond à l'URL
+                if (($varsValues = $route->matchUrl($this->visitorRequest())) !== false)
                 {
                     if ($route->hasVar()) {
-                        $matchedValue = $matchedRoute[1]; // voir doc preg_match
-                        $route->setVarValue($matchedValue);
+                        $varsNames = $route->varsNames();
+                        $listVars = [];
+                        foreach ($varsValues as $key => $value)
+                        {
+                            if ($key !== 0)
+                            {
+                                $listVars[$varsNames[$key-1]] = $value;
+                            }
+                        }
+                        $route->setVars($listVars);
                     }
 
                     $this->setRoute($route);
                     $this->setActionView($this->route()->view());
+                    $_GET = array_merge($_GET, $route->vars());
+
                     return;
                 }
             }
@@ -97,24 +105,33 @@ class Controller
     public function executeIndex()
     {
         $blogPostManager = new BlogPostManager;
-        $blogPostList = $blogPostManager->getList();
+        $blogPostList = $blogPostManager->getList($this->config->getConfig('blogPosts'), $this->getData('page'));
+        $nbBlogPost = $blogPostManager->count();
         $this->page->addVar('blogPostList', $blogPostList);
+        $this->page->addVar('nbBlogPost', $nbBlogPost);
     }
 
     public function executeShowBlogPost()
     {
         $blogPostManager = new BlogPostManager;
-        $blogPost = $blogPostManager->getUnique($this->route()->varValue());
+        $blogPost = $blogPostManager->getUnique($this->getData('id'));
         $this->page->addVar('blogPost', $blogPost);
 
         $commentManager = new CommentManager;
-        $commentList = $commentManager->getList($this->route()->varValue());
+        $commentList = $commentManager->getList($this->getData('id'), $this->config->getConfig('comments'), $this->getData('page'));
+        $nbCommentaires = $commentManager->count($this->getData('id'));
         $this->page->addVar('commentList', $commentList);
+        $this->page->addVar('nbCommentaires', $nbCommentaires);
     }
 
     public function postData($key)
     {
         return isset($_POST[$key])? $_POST[$key] : null;
+    }
+
+    public function getData($key)
+    {
+        return isset($_GET[$key])? $_GET[$key] : null;
     }
 
     public function executeInsertBlogPost()
@@ -135,7 +152,7 @@ class Controller
                 $this->user->setMessage('Votre blogpost a bien été ajouté');
                 $this->user->setAttribute('auteur', $blogPost->auteur());
 
-                $this->redirect('/index');
+                $this->redirect('/index/1');
             }
             else
             {
@@ -151,16 +168,16 @@ class Controller
     public function executeUpdateBlogPost()
     {
         $blogPostManager = new BlogPostManager;
-        $blogPost = $blogPostManager->getUnique($this->route()->varValue());
+        $blogPost = $blogPostManager->getUnique($this->getData('id'));
         $this->page->addVar('blogPost', $blogPost);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $blogPost = new BlogPost([
-                'titre' => $_POST['titre'],
-                'auteur' => $_POST['auteur'],
-                'chapo' => $_POST['chapo'],
-                'contenu' => $_POST['contenu'],
-                'id' => $this->route()->varValue()
+                'titre' => $this->postData('titre'),
+                'auteur' => $this->postData('auteur'),
+                'chapo' => $this->postData('chapo'),
+                'contenu' => $this->postData('contenu'),
+                'id' => $this->getData('id')
             ]);
 
             if ($blogPost->isValid())
@@ -169,7 +186,7 @@ class Controller
 
                 $this->user->setMessage('Le blogpost a bien été modifié');
 
-                $this->redirect('/blogPost/'. $blogPost->id());
+                $this->redirect('/blogPost/'. $blogPost->id() . '/page/1');
             }
         }
         else
@@ -181,11 +198,11 @@ class Controller
     public function executeDeleteBlogPost()
     {
         $blogPostManager = new BlogPostManager();
-        $blogPostManager->delete($this->route->varValue());
+        $blogPostManager->delete($this->getData('id'));
 
         $this->user->setMessage('Le blogpost a bien été supprimé');
 
-        $this->redirect('/index');
+        $this->redirect('/index/1');
     }
 
     public function executeInsertComment()
@@ -195,9 +212,9 @@ class Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $comment = new Comment([
-                'blogPost' => $this->route->varValue(),
-                'auteur' => $_POST['auteur'],
-                'contenu' => $_POST['contenu']
+                'blogPost' => $this->getData('blogPost'),
+                'auteur' => $this->postData('auteur'),
+                'contenu' => $this->postData('contenu')
             ]);
 
             if ($comment->isValid())
@@ -209,7 +226,7 @@ class Controller
                 $this->user->setMessage('Votre commentaire a bien été ajouté');
                 $this->user->setAttribute('auteur', $comment->auteur());
 
-                $this->redirect('/blogPost/'. $comment->blogPost());
+                $this->redirect('/blogPost/'. $this->getData('blogPost') . '/page/1');
             }
             else
             {
@@ -225,7 +242,7 @@ class Controller
     public function executeUpdateComment()
     {
         $commentManager = new commentManager;
-        $comment = $commentManager->getUnique($this->route()->varValue());
+        $comment = $commentManager->getUnique($this->getData('id'));
         $blogPostId = $comment->blogPost();
         $this->page->addVar('comment', $comment);
 
@@ -237,10 +254,10 @@ class Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $comment = new Comment([
-               'id' => $this->route()->varValue(),
+               'id' => $this->getData('id'),
                'blogPost' => $blogPostId,
-               'auteur' => $_POST['auteur'],
-               'contenu' => $_POST['contenu']
+               'auteur' => $this->postData('auteur'),
+               'contenu' => $this->postData('contenu')
             ]);
 
             if ($comment->isValid())
@@ -249,7 +266,7 @@ class Controller
 
                 $this->user->setMessage('Le commentaire a bien été modifié');
 
-                $this->redirect('/blogPost/'. $blogPostId);
+                $this->redirect('/blogPost/'. $blogPostId . '/page/1');
             }
         }
         else
@@ -261,11 +278,11 @@ class Controller
     public function executeDeleteComment()
     {
         $commentManager = new CommentManager;
-        $blogPost = $commentManager->delete($this->route->varValue());
+        $blogPost = $commentManager->delete($this->getData('id'));
 
         $this->user->setMessage('Le commentaire a bien été supprimé');
 
-        $this->redirect('/blogPost/'. $blogPost);
+        $this->redirect('/blogPost/'. $blogPost . '/page/1');
     }
 
     public function returnFormError(Entity $entity) {
@@ -297,20 +314,18 @@ class Controller
 
     public function send()
     {
+        $config = $this->config();
         $user = $this->user();
-        extract($this->page->vars()); /* normalement cette manip permet d'avoir accés aux variables contenues dans le tableau vars[] qui
-         est un attribut de la classe Page : on a accés à tout ce qu'à renvoyé le manager (auteur du blogPost ou du comment, titre du Blogpost
-        chapo du blogPost, contenu du blogPost ou du comment, date de modif, ajout .. ) */
-        ob_start(); // débute la temporisation de sortie : ob = Out Buffer .. ça veut dire que ça va repartir chez le visiteur :)
-        require $this->page->fileView(); // on charge et exige que le fichier de la vue liée à la page donc à la demande du visiteur
-        //  soit présent dans le tampon
-        // (ça fait par exemple pour l'index de tous les blogPost : require 'index.php' dans le tampon )
-        $content = ob_get_clean(); // là on met tout le fichier de la vue dans la variable $content :) dont on va se servir dans le layout;)
-        // mais c'est pas finit on a pas retourné quoi que ce soit ..
 
-        ob_start(); // on recommence une temporisation
-        require __DIR__.'/../../Templates/layout.php'; // on charge le layout
-        exit(ob_get_clean()); // et là on balance tout, on renvoit la réponse du visiteur ! c'est bien ça ?:)
+        extract($this->page->vars());
+
+        ob_start();
+        require $this->page->fileView();
+        $content = ob_get_clean();
+
+        ob_start();
+        require __DIR__.'/../../Templates/layout.php';
+        exit(ob_get_clean());
     }
 
     // SETTERS
@@ -329,7 +344,7 @@ class Controller
 
         $this->actionView = $actionView;
 
-        $this->page->setFileView(__DIR__.'/../../Views/'.$actionView.'.php'); // là j'inclus le fichier de la vue dans l'instance de ma classe Page
+        $this->page->setFileView(__DIR__.'/../../Views/'.$actionView.'.php');
     }
 
     // GETTERS
@@ -357,6 +372,11 @@ class Controller
     public function user()
     {
         return $this->user;
+    }
+
+    public function config()
+    {
+        return $this->config;
     }
 
 }

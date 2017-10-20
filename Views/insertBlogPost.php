@@ -1,5 +1,8 @@
 <div class="container marginTop">
     <div class="row">
+        <div class="divLogo">
+            <img class="logoBody" src="/img/logo3min.png">
+        </div>
         <?php if(($_SERVER['REQUEST_METHOD'] == 'POST') && $user->hasMessage()) echo '<p class="col-md-offset-2 col-md-8 col-sm-12 warning">',$user->getMessage(),'</p>'; ?>
         <form class="col-md-offset-2 col-md-8 col-sm-12" action="" method="post">
             <legend>Ajouter un blogpost</legend>
@@ -19,7 +22,7 @@
                 <label for="contenu">Contenu : </label>
                 <textarea id="contenu" rows="10" type="textarea" name="contenu" class="form-control"><?php if (isset($_POST['contenu'])) echo $_POST['contenu'] ?></textarea>
             </div>
-            <button class="btn ajouter" type="submit">Envoyer</button>
+            <button class="btn envoyer" type="submit">Ajouter</button>
         </form>
     </div>
 </div>

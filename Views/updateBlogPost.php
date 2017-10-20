@@ -1,5 +1,8 @@
 <div class="container marginTop">
     <div class="row">
+        <div class="divLogo">
+            <img class="logoBody" src="/img/logo3min.png">
+        </div>
         <form class="col-md-offset-2 col-md-8 col-sm-12" action="" method="post">
             <legend>Modifier le blogpost :
                 <h3><a href="/blogPost/<?= $blogPost['id'] ?>"><?= htmlspecialchars($blogPost['titre']) ?></a></h3>
@@ -19,9 +22,9 @@
             </div>
             <div class="form-group">
                 <label for="contenu">Contenu : </label>
-                <textarea id="contenu" type="textarea" name="contenu" class="form-control"><?= htmlspecialchars($blogPost['contenu']) ?></textarea>
+                <textarea id="contenu" type="textarea" rows="10" name="contenu" class="form-control"><?= htmlspecialchars($blogPost['contenu']) ?></textarea>
             </div>
-            <button class="btn btn-info" type="submit">Modifier</button>
+            <button class="btn envoyer" type="submit">Modifier</button>
         </form>
     </div>
 </div>

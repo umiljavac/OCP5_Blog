@@ -18,7 +18,7 @@ INSERT INTO BlogPost VALUES
   (NULL, 'Le Jazzo', 'Javacrisp', 'Une petite mise en bouche sur le Jazz volume 2',
    'Je n\'ai rien à dire de très pértinent je vais donc déblatérer des trucs encore plus insipides !', NOW(), NOW()),
   (NULL, 'Le Jazzul', 'Javacrisp', 'Une petite mise en bouche sur le Jazz volume 3',
-   'Je n\'ai rien à dire de très pértinent je vais donc déblatérer des truc encore plus longtemps !', NOW(), NOW());
+   'Je n\'ai rien à dire de très pértinent je vais donc déblatérer des trucs encore plus longtemps !', NOW(), NOW());
 
 CREATE TABLE Comment (
   id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -38,3 +38,5 @@ INSERT INTO Comment VALUES
 
 -- A ajouter après ..
 ALTER TABLE Comment ADD FOREIGN KEY (blogPost) REFERENCES BlogPost(id) ON DELETE CASCADE;
+
+ALTER TABLE BlogPost ADD COLUMN categorie VARCHAR(50) NOT NULL;
