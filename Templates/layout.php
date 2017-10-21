@@ -52,7 +52,7 @@
                     <a href="#page-top"></a>
                 </li>
                 <li>
-                    <a href="/index/1">BlogPost</a>
+                    <a href="/index/p1/cat/all">BlogPost</a>
                 </li>
                 <li>
                     <a href="/blogPost/insert">Ecrire un BlogPost</a>

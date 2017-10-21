@@ -16,18 +16,15 @@ class BlogPostManager extends Manager
     {
         if($blogPost->isNew())
         {
-            $req = $this->db->prepare('INSERT INTO BlogPost SET id = NULL , titre = :titre, auteur = :auteur, chapo = :chapo, contenu = :contenu, dateAjout = NOW(), dateModif = NOW()');
+            $req = $this->db->prepare('INSERT INTO BlogPost SET id = NULL , titre = :titre, auteur = :auteur, chapo = :chapo, contenu = :contenu, dateAjout = NOW(), dateModif = NOW(), categorie = :categorie');
 
             $req->bindValue(':titre', $blogPost->titre());
             $req->bindValue(':auteur', $blogPost->auteur());
             $req->bindValue(':chapo', $blogPost->chapo());
             $req->bindValue(':contenu', $blogPost->contenu());
+            $req->bindValue(':categorie', $blogPost->categorie());
 
             $req->execute();
-            //ajout de la veille 6/10/2017
-       /*     $req = $this->db->query('SELECT id FROM BlogPost WHERE id = last_insert_id()');
-            $lastBlogPostId = $req->fetchColumn();
-            return $lastBlogPostId; */
         }
         else
         {
@@ -37,12 +34,13 @@ class BlogPostManager extends Manager
 
     public function update(BlogPost $blogPost)
     {
-        $req = $this->db->prepare('UPDATE BlogPost SET titre = :titre, auteur = :auteur, chapo = :chapo, contenu = :contenu, dateModif = NOW() WHERE id = :id');
+        $req = $this->db->prepare('UPDATE BlogPost SET titre = :titre, auteur = :auteur, chapo = :chapo, contenu = :contenu, dateModif = NOW(), categorie = :categorie WHERE id = :id');
 
         $req->bindValue(':titre', $blogPost->titre());
         $req->bindValue(':auteur', $blogPost->auteur());
         $req->bindValue(':chapo', $blogPost->chapo());
         $req->bindValue(':contenu', $blogPost->contenu());
+        $req->bindValue(':categorie', $blogPost->categorie());
         $req->bindValue(':id', $blogPost->id(), \PDO::PARAM_INT);
 
         $req->execute();
@@ -54,10 +52,19 @@ class BlogPostManager extends Manager
 
     }
 
-    public function getList($limit, $offset)
+    public function getList($cat, $limit, $offset)
     {
         $offset --;
-        $req = $this->db->query('SELECT id, titre, auteur, chapo, contenu, dateAjout, dateModif FROM BlogPost ORDER BY id DESC LIMIT ' . (int) $limit .' OFFSET ' . (int) ($offset * $limit));
+        if ($cat === 'all')
+        {
+            $req = $this->db->query('SELECT id, titre, auteur, chapo, contenu, dateAjout, dateModif, categorie FROM BlogPost ORDER BY id DESC LIMIT ' . (int) $limit .' OFFSET ' . (int) ($offset * $limit));
+        }
+        else
+        {
+            $req = $this->db->prepare('SELECT id, titre, auteur, chapo, contenu, dateAjout, dateModif, categorie FROM BlogPost WHERE categorie = :cat ORDER BY id DESC LIMIT ' . (int)$limit . ' OFFSET ' . (int) ($offset * $limit));
+            $req->bindValue(':cat', $cat, \PDO::PARAM_STR);
+            $req->execute();
+        }
         $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\BlogPost');
         $blogPostList = $req->fetchAll();
 
@@ -73,7 +80,7 @@ class BlogPostManager extends Manager
 
     public function getUnique($id)
     {
-        $req = $this->db->prepare('SELECT id, titre, auteur, chapo, contenu, dateAjout, dateModif FROM BlogPost WHERE id = :id');
+        $req = $this->db->prepare('SELECT id, titre, auteur, chapo, contenu, dateAjout, dateModif, categorie FROM BlogPost WHERE id = :id');
         $req->bindValue(':id', (int) $id,\PDO::PARAM_INT);
         $req->execute();
 
@@ -89,9 +96,19 @@ class BlogPostManager extends Manager
         return null;
     }
 
-    public function count()
+    public function count($cat)
     {
-        return $this->db->query('SELECT COUNT(*) FROM BlogPost')->fetchColumn();
+        if ($cat === 'all')
+        {
+            return $this->db->query('SELECT COUNT(*) FROM BlogPost')->fetchColumn();
+        }
+        else
+        {
+            $req = $this->db->prepare('SELECT COUNT(*) FROM BlogPost WHERE categorie = :cat');
+            $req->bindValue(':cat', $cat, \PDO::PARAM_STR);
+            $req->execute();
+            return $req->fetchColumn();
+        }
     }
 
 }
