@@ -14,6 +14,7 @@ class BlogPost extends Entity
 {
     protected $titre;
     protected $chapo;
+    protected $categorie;
 
     const TITRE_INVALIDE = 'le champs "titre" est vide';
     const CHAPO_INVALIDE = 'le champs "chapô" est vide';
@@ -46,6 +47,11 @@ class BlogPost extends Entity
         $this->chapo = $chapo;
     }
 
+    public function setCategorie($cat)
+    {
+        $this->categorie = $cat;
+    }
+
     public function titre()
     {
         return $this->titre;
@@ -55,4 +61,10 @@ class BlogPost extends Entity
     {
         return $this->chapo;
     }
+
+    public function categorie()
+    {
+        return $this->categorie;
+    }
+
 }

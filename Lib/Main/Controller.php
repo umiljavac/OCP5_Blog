@@ -104,11 +104,13 @@ class Controller
 
     public function executeIndex()
     {
+        $categorie = $this->getData('cat');
         $blogPostManager = new BlogPostManager;
-        $blogPostList = $blogPostManager->getList($this->config->getConfig('blogPosts'), $this->getData('page'));
-        $nbBlogPost = $blogPostManager->count();
+        $blogPostList = $blogPostManager->getList($categorie, $this->config->getConfig('blogPosts'), $this->getData('page'));
+        $nbBlogPost = $blogPostManager->count($categorie);
         $this->page->addVar('blogPostList', $blogPostList);
         $this->page->addVar('nbBlogPost', $nbBlogPost);
+        $this->page->addVar('categorie', $categorie);
     }
 
     public function executeShowBlogPost()
@@ -141,7 +143,8 @@ class Controller
                 'titre' => $this->postData('titre'),
                 'auteur' => $this->postData('auteur'),
                 'chapo' => $this->postData('chapo'),
-                'contenu' => $this->postData('contenu')
+                'contenu' => $this->postData('contenu'),
+                'categorie' => $this->postData('categorie')
             ]);
 
             if ($blogPost->isValid())
@@ -152,7 +155,7 @@ class Controller
                 $this->user->setMessage('Votre blogpost a bien été ajouté');
                 $this->user->setAttribute('auteur', $blogPost->auteur());
 
-                $this->redirect('/index/1');
+                $this->redirect('/index/p1/cat/all');
             }
             else
             {
@@ -177,6 +180,7 @@ class Controller
                 'auteur' => $this->postData('auteur'),
                 'chapo' => $this->postData('chapo'),
                 'contenu' => $this->postData('contenu'),
+                'categorie' => $this->postData('categorie'),
                 'id' => $this->getData('id')
             ]);
 
@@ -186,7 +190,7 @@ class Controller
 
                 $this->user->setMessage('Le blogpost a bien été modifié');
 
-                $this->redirect('/blogPost/'. $blogPost->id() . '/page/1');
+                $this->redirect('/blogPost/'. $blogPost->id() . '/p1');
             }
         }
         else
@@ -202,7 +206,7 @@ class Controller
 
         $this->user->setMessage('Le blogpost a bien été supprimé');
 
-        $this->redirect('/index/1');
+        $this->redirect('/index/p1/cat/all');
     }
 
     public function executeInsertComment()
@@ -226,7 +230,7 @@ class Controller
                 $this->user->setMessage('Votre commentaire a bien été ajouté');
                 $this->user->setAttribute('auteur', $comment->auteur());
 
-                $this->redirect('/blogPost/'. $this->getData('blogPost') . '/page/1');
+                $this->redirect('/blogPost/'. $this->getData('blogPost') . '/p1');
             }
             else
             {
@@ -266,7 +270,7 @@ class Controller
 
                 $this->user->setMessage('Le commentaire a bien été modifié');
 
-                $this->redirect('/blogPost/'. $blogPostId . '/page/1');
+                $this->redirect('/blogPost/'. $blogPostId . '/p1');
             }
         }
         else
@@ -282,7 +286,7 @@ class Controller
 
         $this->user->setMessage('Le commentaire a bien été supprimé');
 
-        $this->redirect('/blogPost/'. $blogPost . '/page/1');
+        $this->redirect('/blogPost/'. $blogPost . '/p1');
     }
 
     public function returnFormError(Entity $entity) {

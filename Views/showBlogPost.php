@@ -6,7 +6,7 @@
         <div class="divLogo text-center">
             <img class="logoBody" src="/img/logo3min.png" alt="logo">
         </div>
-        <div class="divMessage text-center">
+        <div class="text-center">
         <?php
         if($user->hasMessage() && ($_SESSION['trajet'] == 'redirect'))
         {
@@ -59,7 +59,7 @@
 
                 for ($i = 1; $i <= $nbCommentaires; $i += $config->getConfig('comments')) {
                     ?>
-                    <a href="/blogPost/<?= $blogPost['id'] ?>/page/<?= $numeroPage ?>"><button class="btn-page"><?= $numeroPage?></button></a>
+                    <a class="btn btn-info" href="/blogPost/<?= $blogPost['id'] ?>/p<?= $numeroPage ?>"><?= $numeroPage?></a>
                     <?php $numeroPage++;
                 }
                 ?>

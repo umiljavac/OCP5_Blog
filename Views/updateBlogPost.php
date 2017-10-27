@@ -24,6 +24,16 @@
                 <label for="contenu">Contenu : </label>
                 <textarea id="contenu" type="textarea" rows="10" name="contenu" class="form-control"><?= htmlspecialchars($blogPost['contenu']) ?></textarea>
             </div>
+            <div class="form-group">
+                <label for="categorie">Catégorie : </label>
+                <select id="categorie" name="categorie" class="form-control">
+                    <option value="freestyle">Freestyle</option>
+                    <option value="programmation">Programmation</option>
+                    <option value="litterature">Littérature</option>
+                    <option value="musique">Musique</option>
+                    <option value="societe">Société</option>
+                </select>
+            </div>
             <button class="btn envoyer" type="submit">Modifier</button>
         </form>
     </div>

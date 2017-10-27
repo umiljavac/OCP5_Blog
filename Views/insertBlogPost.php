@@ -22,6 +22,16 @@
                 <label for="contenu">Contenu : </label>
                 <textarea id="contenu" rows="10" type="textarea" name="contenu" class="form-control"><?php if (isset($_POST['contenu'])) echo $_POST['contenu'] ?></textarea>
             </div>
+            <div class="form-group">
+                <label for="categorie">Catégorie : </label>
+                <select id="categorie" name="categorie" class="form-control">
+                    <option value="freestyle">Freestyle</option>
+                    <option value="programmation">Programmation</option>
+                    <option value="litterature">Littérature</option>
+                    <option value="musique">Musique</option>
+                    <option value="societe">Société</option>
+                </select>
+            </div>
             <button class="btn envoyer" type="submit">Ajouter</button>
         </form>
     </div>
