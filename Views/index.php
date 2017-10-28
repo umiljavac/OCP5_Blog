@@ -17,10 +17,11 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="/index/p1/cat/freestyle">Freestyle</a></li>
-                        <li><a href="/index/p1/cat/programmation">Programmation</a></li>
+                        <li><a href="/index/p1/cat/actu">Actu</a></li>
                         <li><a href="/index/p1/cat/litterature">Littérature</a></li>
                         <li><a href="/index/p1/cat/musique">Musique</a></li>
+                        <li><a href="/index/p1/cat/programmation">Programmation</a></li>
+                        <li><a href="/index/p1/cat/science">Science</a></li>
                         <li><a href="/index/p1/cat/societe">Société</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/index/p1/cat/all">Toutes..</a></li>
@@ -32,12 +33,33 @@
     foreach ($blogPostList as $blogPost)
     {
         ?>
-        <div class="row">
-            <div class="blogPostList">
-                <span class="cat"><?= $blogPost['categorie'] ?></span>
-                <h3 class="text-center h3BlogPostList"><a class="titreBlogPostList" href="/blogPost/<?=$blogPost->id()?>/p1"><?= htmlspecialchars($blogPost->titre()) ?></a></h3>
-                <p class="chapoBlogPostList"><?= nl2br(htmlspecialchars($blogPost->chapo())) ?></p>
-                <p class="dateBlogPostList"><?='le '.$blogPost->dateAjout()->format('d/m/Y à H\hi')?></p>
+        <div class="blogPostList">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-12 div-img-index" >
+                    <?php
+                    foreach ($imageList as $image)
+                    {
+                        if ($blogPost['id'] === $image['blogPostId'])
+                        {
+
+                            ?> <img class="img-responsive img-index center-block" src="/imgUp/<?= $image['serverFile'] ?>">
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+                <div class="col-lg-8 col-md-6">
+                    <h3 class="text-center h3BlogPostList"><a class="titreBlogPostList" href="/blogPost/<?=$blogPost->id()?>/p1"><?= htmlspecialchars($blogPost->titre()) ?></a></h3>
+                    <p class="chapoBlogPostList"><?= nl2br(htmlspecialchars($blogPost->chapo())) ?></p>
+                </div>
+                <div class="col-lg-2 col-md-3 bp-info">
+                    <div class="col-sm-12 cat text-center ">
+                        <span><?= $blogPost['categorie'] ?></span>
+                    </div>
+                    <div class="bp-date col-sm-12 text-center">
+                        <p class="dateBlogPostList "><?='le '.$blogPost->dateAjout()->format('d/m/Y à H\hi')?></p class="dateBlogPostList ">
+                    </div>
+                </div>
             </div>
         </div>
         <?php
@@ -48,7 +70,7 @@
         $numeroPage = 1;
         for ($i = 1; $i <= $nbBlogPost; $i += $config->getConfig('blogPosts')) {
         ?>
-            <a class="btn btn-info" href="/index/p<?= $numeroPage ?>/cat/<?= $categorie ?>"><?= $numeroPage?></a>
+            <a class="btn btn-info" href="/index/p<?= $numeroPage ?>/cat/<?= $categorie ?>"><?= $numeroPage ?></a>
         <?php $numeroPage++;
         }
         ?>

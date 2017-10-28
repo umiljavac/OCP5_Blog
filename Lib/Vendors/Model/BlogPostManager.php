@@ -111,4 +111,9 @@ class BlogPostManager extends Manager
         }
     }
 
+    public function lastInsertId()
+    {
+        return $this->db->query('SELECT id FROM BlogPost WHERE id = LAST_INSERT_ID()')->fetchColumn();
+    }
+
 }

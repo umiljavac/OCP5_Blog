@@ -207,6 +207,10 @@ section.success {
     .commentaires h3 {
         font-size: 1.3em !important;
     }
+
+    .commentaires {
+        margin-top: -10px;
+    }
     .pagination {
         justify-content: center !important;
     }
@@ -225,7 +229,7 @@ section.success {
     #about h2, #contact h2 {
         font-size: 2em;
     }
-    .dateBlogPostList, .date {
+    .date {
         text-align: center !important;
         padding: 0 !important;
     }
@@ -354,8 +358,6 @@ footer .footer-below {
 
 .dateBlogPostList {
     font-size: 1em;
-    text-align: right;
-    padding-right: 20px;
     font-family: "Gruppo", cursive;
     color: white;
 }
@@ -366,30 +368,46 @@ footer .footer-below {
 
 .blogPostList {
     margin: 20px;
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid white;
-    background-color: lightslategrey;
-    opacity: 1;
+    /*   background-color: lightslategrey; */
+    background-color: rgb(119, 136, 143);
     font-family: 'Lato', cursive;
     color: black;
     opacity: 0.95;
 }
 
+.dateBlogPostList {
+    font-size: 1em;
+    font-family: "Gruppo", cursive;
+    color: white;
+}
+
+.bp-info {
+    margin-top: 8px;
+}
+
+.bp-date {
+    margin-bottom: -15px;
+}
+
+.row-bp-date{
+}
+
 .cat {
     text-transform: uppercase;
-    margin-left: 10px;
     font-family: "Gruppo", cursive;
     color: #f0ad4e;
+
 }
 
 .h3BlogPostList {
-    margin-top: 0px;
+    margin-top: 10px;
 }
 
 .titreBlogPostList {
-    border-bottom: 2px solid transparent;
     color: white;
-    padding: 1px;
     font-family: 'Lato', cursive;
 }
 
@@ -400,6 +418,7 @@ footer .footer-below {
 
 .blogPost {
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 .auteurBlogPost {
@@ -429,6 +448,8 @@ footer .footer-below {
     color: black;
 }
 
+
+
 .contenuCommentaire {
     font-size: 1.2em;
     padding: 10px 0;
@@ -438,8 +459,7 @@ footer .footer-below {
 
 .commentaire {
     padding: 10px;
-   /* background-color: rgba(147,151,158,0.42); */
-    background-color: lightslategrey;
+    background-color: rgb(119, 136, 143);
     margin-bottom: 10px;
 }
 
@@ -448,8 +468,8 @@ footer .footer-below {
 }
 
 .border {
-    border-top: 5px solid black;
-    border-bottom: 5px solid black;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
 }
 
 #ulm {
@@ -462,6 +482,14 @@ footer .footer-below {
 
 .supprimer:hover {
     background-color: #ac2925;
+}
+
+.action {
+    margin-bottom: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgb(119, 136, 143);
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .modifier, .supprimer {
@@ -504,8 +532,14 @@ a:focus, a:hover {
 }
 
 .divLogo {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.divLogo-min {
     padding: 25px 0;
     text-align: center;
+    margin-top: -15px;
 }
 
 .logoBody {
@@ -532,19 +566,19 @@ a:focus, a:hover {
 }
 
 .fondIndex {
-    background: url("../img/fond-index.png");
+    background: url("../img/fond-index-blur6.jpg");
     background-position: top center;
 }
 
 .content {
-    padding-top: 40px;
+    padding-top: 25px;
 }
 
 #content {
     padding-bottom: 0;
 }
 .pagination {
-   display: flex;
+    display: flex;
     justify-content: left;
 }
 
@@ -574,24 +608,30 @@ a:focus, a:hover {
     color: black;
     font-size: 1em;
 }
- .titreCommentaires {
-     margin: 20px 0;
-     padding-top: 10px;
- }
+.titreCommentaires {
+    margin: 20px 0;
+    padding-top: 10px;
+}
 
- .erreur {
-     padding: 60px 0;
- }
+.erreur {
+    padding: 60px 0;
+}
 
 .btn-default {
     margin-left: 5px !important;
-    background-color: darkcyan;
+    background-color: #e6e6e6;
     border: none;
-    color: white;
+    color: black;
     padding-top: 3px;
     border-radius: 5px;
     border: 1px solid black;
     font-family: "Gruppo", cursive;
+    opacity: 0.95;
+}
+
+.btn-default:hover {
+    background-color: orange;
+    border-color: black;
 }
 
 .dropdown-menu {
@@ -607,4 +647,20 @@ a:focus, a:hover {
 
 .dropdown-menu > li > a:hover {
     background-color: orange;
+}
+
+.full-border {
+    border: 3px solid black;
+}
+
+.div-img-index {
+    margin-bottom: 10px;
+}
+
+.img-index {
+    border: 2px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+    max-width: 155px;
+    max-height: 117px;
 }

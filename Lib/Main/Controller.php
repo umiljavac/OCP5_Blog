@@ -9,8 +9,10 @@ namespace Main;
 
 use Entity\BlogPost;
 use Entity\Comment;
+use Entity\Image;
 use Model\BlogPostManager;
 use Model\CommentManager;
+use Model\ImageManager;
 
 class Controller
 {
@@ -105,23 +107,34 @@ class Controller
     public function executeIndex()
     {
         $categorie = $this->getData('cat');
+
         $blogPostManager = new BlogPostManager;
         $blogPostList = $blogPostManager->getList($categorie, $this->config->getConfig('blogPosts'), $this->getData('page'));
         $nbBlogPost = $blogPostManager->count($categorie);
+
+        $imageManager = new ImageManager;
+        $imageList = $imageManager->getList($categorie, $this->config->getConfig('blogPosts'), $this->getData('page'));
+
         $this->page->addVar('blogPostList', $blogPostList);
         $this->page->addVar('nbBlogPost', $nbBlogPost);
         $this->page->addVar('categorie', $categorie);
+        $this->page->addVar('imageList', $imageList);
     }
 
     public function executeShowBlogPost()
     {
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($this->getData('id'));
-        $this->page->addVar('blogPost', $blogPost);
+
+        $imageManager = new ImageManager;
+        $image = $imageManager->getUnique($this->getData('id'));
 
         $commentManager = new CommentManager;
         $commentList = $commentManager->getList($this->getData('id'), $this->config->getConfig('comments'), $this->getData('page'));
         $nbCommentaires = $commentManager->count($this->getData('id'));
+
+        $this->page->addVar('blogPost', $blogPost);
+        $this->page->addVar('image', $image);
         $this->page->addVar('commentList', $commentList);
         $this->page->addVar('nbCommentaires', $nbCommentaires);
     }
@@ -138,7 +151,12 @@ class Controller
 
     public function executeInsertBlogPost()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $this->page->addVar('tailleMax', Image::MAX_SIZE);
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $blogPostManager = new BlogPostManager;
+
             $blogPost = new BlogPost([
                 'titre' => $this->postData('titre'),
                 'auteur' => $this->postData('auteur'),
@@ -147,15 +165,37 @@ class Controller
                 'categorie' => $this->postData('categorie')
             ]);
 
+            $image = new Image;
+
             if ($blogPost->isValid())
             {
-                $blogPostManager = new BlogPostManager;
-                $blogPostManager->insert($blogPost);
+                if ($image->tryUpload() === true )
+                {
+                    if ($image->isValid())
+                    {
+                        $blogPostManager->insert($blogPost);
+                        $blogPostId = $blogPostManager->lastInsertId();
+                        $image->setBlogPostId($blogPostId);
+                        $this->executeInsertImage($image);
 
-                $this->user->setMessage('Votre blogpost a bien été ajouté');
-                $this->user->setAttribute('auteur', $blogPost->auteur());
+                        $this->user->setMessage('Votre blogpost a bien été ajouté avec une illustration');
+                        $this->user->setAttribute('auteur', $blogPost->auteur());
 
-                $this->redirect('/index/p1/cat/all');
+                        $this->redirect('/index/p1/cat/all');
+                    }
+                    else
+                    {
+                        $this->returnFormError($image);
+                    }
+                }
+                else
+                {
+                    $blogPostManager->insert($blogPost);
+
+                    $this->user->setMessage('Votre blogpost a bien été ajouté sans illustration');
+                    $this->user->setAttribute('auteur', $blogPost->auteur());
+                    $this->redirect('/index/p1/cat/all');
+                }
             }
             else
             {
@@ -168,13 +208,29 @@ class Controller
         }
     }
 
+    public function executeInsertImage(Image $image)
+    {
+        move_uploaded_file($_FILES[$image::UPLOAD]['tmp_name'], $image::IMG_DIR . $image->serverFile());
+
+        $imageManager = new ImageManager;
+        $imageManager->insert($image);
+    }
+
     public function executeUpdateBlogPost()
     {
+        $this->page->addVar('tailleMax', Image::MAX_SIZE);
+
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($this->getData('id'));
         $this->page->addVar('blogPost', $blogPost);
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $imageManager = new ImageManager;
+
+        $actualImage = $imageManager->getUnique($this->getData('id'));
+        $this->page->addVar('actualImage', $actualImage);
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
             $blogPost = new BlogPost([
                 'titre' => $this->postData('titre'),
                 'auteur' => $this->postData('auteur'),
@@ -184,13 +240,48 @@ class Controller
                 'id' => $this->getData('id')
             ]);
 
+            $image = new Image;
             if ($blogPost->isValid())
             {
-                $blogPostManager->update($blogPost);
+                if ($image->tryUpload() === true)
+                {
+                    if ($image->isValid())
+                    {
+                        $blogPostManager->update($blogPost);
 
-                $this->user->setMessage('Le blogpost a bien été modifié');
-
-                $this->redirect('/blogPost/'. $blogPost->id() . '/p1');
+                        if ($actualImage['id'] !== null)
+                        {
+                            $image->setId($actualImage['id']);
+                            $image->setBlogPostId($actualImage['blogPostId']);
+                            $this->executeUpdateImage($image);
+                            $this->deleteImageFile($actualImage['serverFile']);
+                            $this->user->setMessage('Le blogpost a bien été modifié');
+                            $this->redirect('/blogPost/'. $blogPost->id() . '/p1');
+                        }
+                        else
+                        {
+                            $image->setBlogPostId($this->getData('id'));
+                            $this->executeInsertImage($image);
+                            $this->user->setMessage('Le blogpost a bien été modifié');
+                            $this->redirect('/blogPost/'. $blogPost->id() . '/p1');
+                        }
+                    }
+                    else
+                    {
+                        $this->returnFormError($image);
+                    }
+                }
+                else
+                {
+                    $blogPostManager->update($blogPost);
+                    $this->user->setMessage('Le blogpost a bien été modifié');
+                    $this->redirect('/blogPost/'. $blogPost->id() . '/p1');
+                }
+            }
+            else
+            {
+                $this->returnFormError($blogPost);
+                return;
             }
         }
         else
@@ -199,8 +290,25 @@ class Controller
         }
     }
 
+    public function executeUpdateImage(Image $image)
+    {
+        move_uploaded_file($_FILES[$image::UPLOAD]['tmp_name'], $image::IMG_DIR . $image->serverFile());
+
+        $imageManager = new ImageManager;
+        $imageManager->update($image);
+    }
+
+    public function deleteImageFile ($serverFileImage)
+    {
+        unlink(Image::IMG_DIR.$serverFileImage);
+    }
+
     public function executeDeleteBlogPost()
     {
+        $imageManager = new imageManager;
+        $image = $imageManager->getUnique($this->getData('id'));
+        $this->deleteImageFile($image['serverFile']);
+
         $blogPostManager = new BlogPostManager();
         $blogPostManager->delete($this->getData('id'));
 
@@ -211,9 +319,11 @@ class Controller
 
     public function executeInsertComment()
     {
-        $this->executeShowBlogPost(); // pour récupérer le blogpost dans la vue de création d'un commentaire
+        $blogPostManager = new BlogPostManager;
+        $blogPost = $blogPostManager->getUnique($this->getData('blogPost'));
+        $this->page->addVar('blogPost', $blogPost);
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $comment = new Comment([
                 'blogPost' => $this->getData('blogPost'),
@@ -289,14 +399,14 @@ class Controller
         $this->redirect('/blogPost/'. $blogPost . '/p1');
     }
 
-    public function returnFormError(Entity $entity) {
-        // boucle de récupération des erreurs
+    public function returnFormError(Entity $entity)
+    {
         $erreurString = '';
         foreach ($entity->erreurs() as $erreur)
         {
             $erreurString .= ' - ' .$erreur . '<br />';
         }
-        $this->user->setMessage('Merci de remplir tous les champs du formulaire <br />' . $erreurString);
+        $this->user->setMessage('Oops <br />' . $erreurString);
     }
 
     public function redirect($redirection)
