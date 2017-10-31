@@ -34,8 +34,12 @@ class User
     public function getMessage()
     {
         $message = $_SESSION['message'];
-      //  unset($_SESSION['message']);
         return $message;
+    }
+
+    public function setCookie($name, $value ='', $expire = 0, $path = null, $domain = null, $secure = false, $httpOnly = true)
+    {
+        setcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
     }
 
 }

@@ -39,7 +39,7 @@ class Image extends Entity
     {
         return !(empty($this->userFile) || empty($this->extension) || empty($this->size));
     }
-
+/*
     public function tryUpload()
     {
         if ($this->userFile === '')
@@ -50,6 +50,11 @@ class Image extends Entity
         {
             return true;
         }
+    }
+*/
+    public function tryUpload()
+    {
+        return !empty($this->userFile);
     }
 
     public function setBlogPostId($blogPostId)

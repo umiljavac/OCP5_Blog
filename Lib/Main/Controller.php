@@ -76,8 +76,8 @@ class Controller
                     return;
                 }
             }
-        $this->redirect404();
 
+        $this->redirect404();
         throw new \RuntimeException('Aucune route ne correspond à l\'URL');
     }
 
@@ -115,10 +115,7 @@ class Controller
         $imageManager = new ImageManager;
         $imageList = $imageManager->getList($categorie, $this->config->getConfig('blogPosts'), $this->getData('page'));
 
-        $this->page->addVar('blogPostList', $blogPostList);
-        $this->page->addVar('nbBlogPost', $nbBlogPost);
-        $this->page->addVar('categorie', $categorie);
-        $this->page->addVar('imageList', $imageList);
+        $this->page->addVars(['blogPostList' => $blogPostList, 'nbBlogPost' => $nbBlogPost, 'categorie' => $categorie, 'imageList' => $imageList]);
     }
 
     public function executeShowBlogPost()
@@ -133,10 +130,8 @@ class Controller
         $commentList = $commentManager->getList($this->getData('id'), $this->config->getConfig('comments'), $this->getData('page'));
         $nbCommentaires = $commentManager->count($this->getData('id'));
 
-        $this->page->addVar('blogPost', $blogPost);
-        $this->page->addVar('image', $image);
-        $this->page->addVar('commentList', $commentList);
-        $this->page->addVar('nbCommentaires', $nbCommentaires);
+        $this->page->addVars(['blogPost' => $blogPost, 'image' => $image, 'commentList' => $commentList, 'nbCommentaires' => $nbCommentaires]);
+
     }
 
     public function postData($key)
@@ -151,7 +146,7 @@ class Controller
 
     public function executeInsertBlogPost()
     {
-        $this->page->addVar('tailleMax', Image::MAX_SIZE);
+        $this->page->addVars(['tailleMax' => Image::MAX_SIZE]);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
@@ -169,7 +164,7 @@ class Controller
 
             if ($blogPost->isValid())
             {
-                if ($image->tryUpload() === true )
+                if ($image->tryUpload())
                 {
                     if ($image->isValid())
                     {
@@ -218,16 +213,13 @@ class Controller
 
     public function executeUpdateBlogPost()
     {
-        $this->page->addVar('tailleMax', Image::MAX_SIZE);
-
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($this->getData('id'));
-        $this->page->addVar('blogPost', $blogPost);
 
         $imageManager = new ImageManager;
-
         $actualImage = $imageManager->getUnique($this->getData('id'));
-        $this->page->addVar('actualImage', $actualImage);
+
+        $this->page->addVars(['tailleMax' => Image::MAX_SIZE, 'blogPost' => $blogPost, 'actualImage' => $actualImage]);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
@@ -243,7 +235,7 @@ class Controller
             $image = new Image;
             if ($blogPost->isValid())
             {
-                if ($image->tryUpload() === true)
+                if ($image->tryUpload())
                 {
                     if ($image->isValid())
                     {
@@ -281,7 +273,6 @@ class Controller
             else
             {
                 $this->returnFormError($blogPost);
-                return;
             }
         }
         else
@@ -321,7 +312,8 @@ class Controller
     {
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($this->getData('blogPost'));
-        $this->page->addVar('blogPost', $blogPost);
+
+        $this->page->addVars(['blogPost' => $blogPost]);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
@@ -358,12 +350,11 @@ class Controller
         $commentManager = new commentManager;
         $comment = $commentManager->getUnique($this->getData('id'));
         $blogPostId = $comment->blogPost();
-        $this->page->addVar('comment', $comment);
 
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($blogPostId);
-        $this->page->addVar('blogPost', $blogPost);
 
+        $this->page->addVars(['comment' => $comment, 'blogPost' => $blogPost]);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
@@ -406,7 +397,7 @@ class Controller
         {
             $erreurString .= ' - ' .$erreur . '<br />';
         }
-        $this->user->setMessage('Oops <br />' . $erreurString);
+        $this->user->setMessage('Oops !<br />' . $erreurString);
     }
 
     public function redirect($redirection)
@@ -419,11 +410,6 @@ class Controller
     {
         $this->page->setFileView(__DIR__. '/../../Errors/404.html');
         $this->send();
-    }
-
-    public function setCookie($name, $value ='', $expire = 0, $path = null, $domain = null, $secure = false, $httpOnly = true)
-    {
-        setcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
     }
 
     public function send()

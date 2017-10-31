@@ -34,6 +34,18 @@ class Page
         $this->vars[$var] = $value;
     }
 
+    public function addVars(array $vars)
+    {
+        foreach ($vars as $var => $value)
+        {
+            if (!is_string($var) || is_numeric($var) || empty($var))
+            {
+                throw new \InvalidArgumentException('le nom de la variable doit être une chaîne de caractère non nulle');
+            }
+        }
+        $this->vars = $vars;
+    }
+
     public function fileView()
     {
         return $this->fileView;
