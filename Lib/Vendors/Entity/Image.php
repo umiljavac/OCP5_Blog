@@ -39,19 +39,7 @@ class Image extends Entity
     {
         return !(empty($this->userFile) || empty($this->extension) || empty($this->size));
     }
-/*
-    public function tryUpload()
-    {
-        if ($this->userFile === '')
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-*/
+
     public function tryUpload()
     {
         return !empty($this->userFile);

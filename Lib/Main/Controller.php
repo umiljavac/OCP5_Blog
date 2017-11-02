@@ -102,6 +102,7 @@ class Controller
 
     public function executeAccueil()
     {
+        // affichage de la page d'accueil, page statique.
     }
 
     public function executeIndex()
@@ -150,7 +151,6 @@ class Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $blogPostManager = new BlogPostManager;
 
             $blogPost = new BlogPost([
                 'titre' => $this->postData('titre'),
@@ -160,10 +160,12 @@ class Controller
                 'categorie' => $this->postData('categorie')
             ]);
 
-            $image = new Image;
 
             if ($blogPost->isValid())
             {
+                $blogPostManager = new BlogPostManager;
+                $image = new Image;
+
                 if ($image->tryUpload())
                 {
                     if ($image->isValid())
@@ -298,7 +300,10 @@ class Controller
     {
         $imageManager = new imageManager;
         $image = $imageManager->getUnique($this->getData('id'));
-        $this->deleteImageFile($image['serverFile']);
+        if ($image != null)
+        {
+            $this->deleteImageFile($image['serverFile']);
+        }
 
         $blogPostManager = new BlogPostManager();
         $blogPostManager->delete($this->getData('id'));
