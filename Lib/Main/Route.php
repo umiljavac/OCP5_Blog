@@ -5,6 +5,16 @@
  * Date: 25/09/2017
  * Time: 13:13
  */
+
+/**
+ * Class Route
+ * An instantiation of this class allows to stock all informations of a route contained in the routes.xml file.
+ * The constructor set the $url, $view and $varnames attributes.
+ * The method matchUrl() is used to compare the $url attribute with the $_SERVER['REQUEST_URI'].
+ * If variables are contained in the url The method matchUrl() also return the value of the variables.
+ *
+ */
+
 namespace Main;
 
 class Route
@@ -39,6 +49,10 @@ class Route
         return !empty($this->varsNames());
     }
 
+    /***********************************************
+                        SETTERS
+     ***********************************************/
+
     public function setUrl($url)
     {
         if(is_string($url))
@@ -64,6 +78,10 @@ class Route
     {
         $this->vars = $vars;
     }
+
+    /***********************************************
+                        GETTERS
+     ***********************************************/
 
     public function view()
     {

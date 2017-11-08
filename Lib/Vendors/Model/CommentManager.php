@@ -6,6 +6,12 @@
  * Time: 23:14
  */
 
+/**
+ * Class CommentManager is used to request the Comment table in the database.
+ * Methods allow to select, insert, update, delete entries in this table.
+ */
+
+
 namespace Model;
 
 use \Entity\Comment;

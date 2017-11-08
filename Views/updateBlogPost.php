@@ -1,11 +1,12 @@
 <div class="container marginTop">
     <div class="row">
-        <div class="divLogo">
+        <div class="divLogo text-center">
             <img class="logoBody" src="/img/logo3min.png">
         </div>
-        <form class="col-md-offset-2 col-md-8 col-sm-12" action="" method="post">
+        <?php if(($_SERVER['REQUEST_METHOD'] == 'POST') && $user->hasMessage()) echo '<p class="col-md-offset-2 col-md-8 col-sm-12 warning">', $user->getMessage(),'</p>'; ?>
+        <form class="col-md-offset-2 col-md-8 col-sm-12" action="" method="post" enctype="multipart/form-data">
             <legend>Modifier le blogpost :
-                <h3><a href="/blogPost/<?= $blogPost['id'] ?>"><?= htmlspecialchars($blogPost['titre']) ?></a></h3>
+                <h3><a href="/blogPost/<?= $blogPost['id'] ?>/p1"><?= htmlspecialchars($blogPost['titre']) ?></a></h3>
                 rédigé par <i><?= htmlspecialchars($blogPost['auteur']) ?></i>
             </legend>
             <div class="form-group">
@@ -27,12 +28,27 @@
             <div class="form-group">
                 <label for="categorie">Catégorie : </label>
                 <select id="categorie" name="categorie" class="form-control">
-                    <option value="freestyle">Freestyle</option>
-                    <option value="programmation">Programmation</option>
+                    <option value="actu">Actu</option>
                     <option value="litterature">Littérature</option>
                     <option value="musique">Musique</option>
+                    <option value="programmation">Programmation</option>
+                    <option value="science">Science</option>
                     <option value="societe">Société</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="MAX_FILE_SIZE" value="<?= $tailleMax ?>">
+                <?php if(isset($actualImage['serverFile']))
+                {?>
+                    <img class="img-responsive" src="/imgUp/<?= $actualImage['serverFile'] ?>"> <br />
+                    <label for="image">Mettre à jour la photo d'illustration (jpg, jpeg, png, 2 Mo max) : </label>
+                    <?php
+                } else { ?>
+                    <label for="image">Ajouter une photo d'illustration (jpg, jpeg, png, 2 Mo max) : </label>
+                    <?php
+                }
+                ?>
+                <input type="file" name="image">
             </div>
             <button class="btn envoyer" type="submit">Modifier</button>
         </form>

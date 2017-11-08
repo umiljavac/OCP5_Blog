@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <preferences>
-    <pagination var="blogPosts" value="5"></pagination>
+    <pagination var="blogPosts" value="7"></pagination>
     <pagination var="comments" value="4"></pagination>
 </preferences>

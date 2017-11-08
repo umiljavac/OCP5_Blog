@@ -1,10 +1,10 @@
 <div class="container marginTop">
     <div class="row">
-        <div class="divLogo">
+        <div class="divLogo text-center">
             <img class="logoBody" src="/img/logo3min.png">
         </div>
-        <?php if(($_SERVER['REQUEST_METHOD'] == 'POST') && $user->hasMessage()) echo '<p class="col-md-offset-2 col-md-8 col-sm-12 warning">',$user->getMessage(),'</p>'; ?>
-        <form class="col-md-offset-2 col-md-8 col-sm-12" action="" method="post">
+        <?php if(($_SERVER['REQUEST_METHOD'] === 'POST') && $user->hasMessage()) echo '<p class="col-md-offset-2 col-md-8 col-sm-12 warning">', $user->getMessage(),'</p>'; ?>
+        <form class="col-md-offset-2 col-md-8 col-sm-12" action="" method="post" enctype="multipart/form-data">
             <legend>Ajouter un blogpost</legend>
             <div class="form-group">
                 <label for="auteur">Auteur : </label>
@@ -25,12 +25,18 @@
             <div class="form-group">
                 <label for="categorie">Catégorie : </label>
                 <select id="categorie" name="categorie" class="form-control">
-                    <option value="freestyle">Freestyle</option>
-                    <option value="programmation">Programmation</option>
+                    <option value="actu">Actu</option>
                     <option value="litterature">Littérature</option>
                     <option value="musique">Musique</option>
+                    <option value="programmation">Programmation</option>
+                    <option value="science">Science</option>
                     <option value="societe">Société</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="MAX_FILE_SIZE" value="<?= $tailleMax ?>">
+                <label for="image">Ajouter une photo d'illustration (jpg, jpeg, png, 2 Mo max) :</label>
+                <input type="file" name="image">
             </div>
             <button class="btn envoyer" type="submit">Ajouter</button>
         </form>

@@ -19,3 +19,4 @@ $entityLoader->register();
 
 $controller = new \Main\Controller();
 $controller->run();
+
