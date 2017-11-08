@@ -57,7 +57,7 @@
                         <span><?= $blogPost['categorie'] ?></span>
                     </div>
                     <div class="bp-date col-sm-12 text-center">
-                        <p class="dateBlogPostList "><?='le '.$blogPost->dateAjout()->format('d/m/Y à H\hi')?></p class="dateBlogPostList ">
+                        <p class="dateBlogPostList "><?='le '.$blogPost->dateAjout()->format('d/m/Y à H\hi')?></p>
                     </div>
                 </div>
             </div>

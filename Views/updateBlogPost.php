@@ -1,6 +1,6 @@
 <div class="container marginTop">
     <div class="row">
-        <div class="divLogo">
+        <div class="divLogo text-center">
             <img class="logoBody" src="/img/logo3min.png">
         </div>
         <?php if(($_SERVER['REQUEST_METHOD'] == 'POST') && $user->hasMessage()) echo '<p class="col-md-offset-2 col-md-8 col-sm-12 warning">', $user->getMessage(),'</p>'; ?>

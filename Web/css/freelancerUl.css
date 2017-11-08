@@ -20,6 +20,7 @@ a:active,
 a.active {
     color: darkcyan;
     outline: none;
+    text-decoration: none;
 }
 h1,
 h2,
@@ -32,48 +33,10 @@ h6 {
     font-weight: 700;
 }
 
-.img-centered {
-    margin: 0 auto;
-}
-header {
-    text-align: center;
-    background-color: white;
-}
-header .container {
-    padding-top: 75px;
-    padding-bottom: 50px;
-}
-header img {
-    display: block;
-    margin: 0 auto 20px;
-}
-header .intro-text .name {
-    display: inline-block;
-    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 2em;
-    color: #101010;
-    border-bottom: 5px solid grey ;
-}
-header .intro-text .skills {
-    font-size: 1.25em;
-    font-weight: 300;
-    color: darkcyan;
-}
-@media (min-width: 768px) {
-    header .container {
-        padding-top: 100px;
-        padding-bottom: 100px;
-    }
-    header .intro-text .name, .about {
-        font-size: 2.75em;
-    }
-    header .intro-text .skills {
-        font-size: 1.75em;
-    }
+/*************************************************
+                    NAVBAR
+ *************************************************/
 
-}
 .navbar-custom {
     background: #f5f5f5;
     font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -126,31 +89,58 @@ header .intro-text .skills {
     color: white;
     border-color: black;
 }
-@media (min-width: 768px) {
-    .navbar-custom {
-        padding: 25px 0;
-        -webkit-transition: padding 0.3s;
-        -moz-transition: padding 0.3s;
-        transition: padding 0.3s;
-    }
-    .navbar-custom .navbar-brand {
-        -webkit-transition: all 0.3s;
-        -moz-transition: all 0.3s;
-        transition: all 0.3s;
-    }
-    .navbar-custom.affix {
-        padding: 10px 0;
-    }
-    .navbar-custom.affix .navbar-brand {
-        font-size: 1.5em;
-    }
-    nav ul {
-        border-bottom: 5px solid grey;
-    }
-    .envoyer {
-        margin-bottom: 15px;
-    }
+
+/*******************************************
+                DROPDOWN MENU
+********************************************/
+
+.dropdown-menu, .dropdown-menu a {
+    background-color: white;
+    color: black !important;
 }
+.dropdown-menu {
+    margin-left: 5px;
+    font-family:"Gruppo", cursive ;
+}
+.dropdown-menu > li > a:hover {
+    background-color: orange;
+}
+
+/********************************************
+                    HEADER
+ ********************************************/
+
+header {
+    text-align: center;
+    background-color: white;
+}
+header .container {
+    padding-top: 75px;
+    padding-bottom: 50px;
+}
+header img {
+    display: block;
+    margin: 0 auto 20px;
+}
+header .intro-text .name {
+    display: inline-block;
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 2em;
+    color: #101010;
+    border-bottom: 5px solid grey ;
+}
+header .intro-text .skills {
+    font-size: 1.25em;
+    font-weight: 300;
+    color: darkcyan;
+}
+
+/**********************************************
+                    SECTION
+ **********************************************/
+
 section {
     padding: 100px 0;
 }
@@ -162,78 +152,45 @@ section.success {
     background: darkcyan;
     color: white;
 }
-@media (max-width: 767px) {
-    section {
-        padding: 50px 0;
-    }
-
-    .row {
-        margin: 0 5px;
-    }
-
-    .reduce {
-        font-size: 1.25em;
-        text-align: center;
-    }
-
-    .blogPostList {
-        margin-right: 0 !important;
-        margin-left: 0 !important;
-    }
-    .titreBlogPostList {
-        font-size: 0.8em;
-    }
-
-    .chapoBlogPostList {
-        font-size: 1.2em;
-    }
-
-    .titre {
-        font-size: 1.8em !important;
-    }
-
-    .date {
-        font-size: 0.8em !important;
-    }
-
-    .chapo {
-        font-size: 1.5em !important;
-    }
-
-    .contenu {
-        font-size: 1.2em !important;
-    }
-
-    .commentaires h3 {
-        font-size: 1.3em !important;
-    }
-
-    .commentaires {
-        margin-top: -10px;
-    }
-    .pagination {
-        justify-content: center !important;
-    }
-
-    footer {
-        margin-top: 50px;
-    }
-
-    div.footer-above h4, div.footer-above p {
-        font-size: 1.1em;
-    }
-
-    #ulm {
-        margin-top: -50px !important;
-    }
-    #about h2, #contact h2 {
-        font-size: 2em;
-    }
-    .date {
-        text-align: center !important;
-        padding: 0 !important;
-    }
+#contact {
+    background-color: white;
+    color: darkcyan;
+    margin-bottom: -100px;
 }
+.about {
+    color: #101010;
+    border-bottom: 5px solid grey ;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+.skills, #ulm {
+    margin-top: -25px;
+    display: inline-block;
+}
+.marginTop {
+    margin-top: 10px;
+}
+.content {
+    padding-top: 25px;
+}
+#content {
+    padding-bottom: 0;
+}
+.warning {
+    color: #ac2925;
+}
+.border {
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+}
+.pagination {
+    display: flex;
+    justify-content: left;
+}
+
+/*******************************************
+                 CONTACT FORM
+ *******************************************/
 
 .floating-label-form-group {
     position: relative;
@@ -284,6 +241,11 @@ section.success {
 form .row:first-child .floating-label-form-group {
     border-top: 1px solid #eeeeee;
 }
+
+/***********************************************
+                    FOOTER
+ ***********************************************/
+
 footer {
     color: black;
     font-size: 1em !important;
@@ -294,7 +256,6 @@ footer h3 {
 footer .footer-above {
     padding: 30px;
     background: #f5f5f5;
-
 }
 footer .footer-col {
     margin-bottom: 0;
@@ -302,8 +263,12 @@ footer .footer-col {
 footer .footer-below {
     padding: 25px 0;
     background: #9d9d9d;
-
 }
+
+/***********************************************
+                    BTN
+ ***********************************************/
+
 .btn-outline {
     color: white;
     font-size: 20px;
@@ -330,258 +295,6 @@ footer .footer-below {
     font-size: 20px;
     line-height: 45px;
 }
-.scroll-top {
-    position: fixed;
-    right: 2%;
-    bottom: 2%;
-    width: 50px;
-    height: 50px;
-    z-index: 1049;
-}
-.scroll-top .btn {
-    font-size: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    line-height: 28px;
-}
-
-.marginTop {
-    margin-top: 5%;
-}
-
-.date {
-    font-size: 1em;
-    text-align: right;
-
-}
-
-.dateBlogPostList {
-    font-size: 1em;
-    font-family: "Gruppo", cursive;
-    color: white;
-}
-
-.dateCommentaire {
-    font-size: 0.7em;
-}
-
-.blogPostList {
-    margin: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid white;
-    /*   background-color: lightslategrey; */
-    background-color: rgb(119, 136, 143);
-    font-family: 'Lato', cursive;
-    color: black;
-    opacity: 0.95;
-}
-
-.dateBlogPostList {
-    font-size: 1em;
-    font-family: "Gruppo", cursive;
-    color: white;
-}
-
-.bp-info {
-    margin-top: 8px;
-}
-
-.bp-date {
-    margin-bottom: -15px;
-}
-
-.row-bp-date{
-}
-
-.cat {
-    text-transform: uppercase;
-    font-family: "Gruppo", cursive;
-    color: #f0ad4e;
-
-}
-
-.h3BlogPostList {
-    margin-top: 10px;
-}
-
-.titreBlogPostList {
-    color: white;
-    font-family: 'Lato', cursive;
-}
-
-
-.titreBlogPostList:hover {
-    color: orange;
-}
-
-.blogPost {
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.auteurBlogPost {
-    font-size: 1.2em;
-    font-style: italic;
-    font-weight: bold;
-}
-
-.auteurCommentaire {
-    font-size: 1em;
-    font-style: italic;
-    font-weight: bold;
-}
-
-.chapo {
-    font-weight: bold;
-    font-size: 1.8em;
-}
-
-.chapo, .contenu {
-    text-align: justify;
-}
-
-.chapoBlogPostList {
-    text-align: center;
-    font-weight: bold;
-    color: black;
-}
-
-
-
-.contenuCommentaire {
-    font-size: 1.2em;
-    padding: 10px 0;
-    border-bottom: 1px solid white;
-    color: white;
-}
-
-.commentaire {
-    padding: 10px;
-    background-color: rgb(119, 136, 143);
-    margin-bottom: 10px;
-}
-
-.warning {
-    color: #ac2925;
-}
-
-.border {
-    border-top: 3px solid black;
-    border-bottom: 3px solid black;
-}
-
-#ulm {
-    margin-top: -25px;
-}
-
-.modifier:hover {
-    background-color: #f0ad4e;
-}
-
-.supprimer:hover {
-    background-color: #ac2925;
-}
-
-.action {
-    margin-bottom: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgb(119, 136, 143);
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.modifier, .supprimer {
-    color: black;
-    font-weight: bold;
-    width: 78px;
-    border: 1px solid black;
-    border-radius: 5px;
-}
-
-.ajouter {
-    background-color: #d19e40 ;
-    color: white;
-    font-weight: bold;
-}
-
-.envoyer {
-    background-color: darkcyan;
-    color: white;
-    font-weight: bold;
-}
-
-
-#contact {
-    background-color: white;
-    color: darkcyan;
-    margin-bottom: -100px;
-}
-
-a:focus, a:hover {
-    text-decoration: none;
-}
-
-.full-img {
-    width: 100%;
-}
-
-.titre {
-    font-size: 2.5em;
-}
-
-.divLogo {
-    padding: 40px 0;
-    text-align: center;
-}
-
-.divLogo-min {
-    padding: 25px 0;
-    text-align: center;
-    margin-top: -15px;
-}
-
-.logoBody {
-    border: 2px solid black;
-    border-radius: 10%;
-    padding: 5px;
-    background-color: white;
-}
-
-.nameCustom {
-    color:#d19e40 ;
-}
-
-.about {
-    color: #101010;
-    border-bottom: 5px solid grey ;
-    display: inline-block;
-    padding-bottom: 5px;
-}
-
-.skills {
-    display: inline-block;
-    margin-top: -25px;
-}
-
-.fondIndex {
-    background: url("../img/fond-index-blur6.jpg");
-    background-position: top center;
-}
-
-.content {
-    padding-top: 25px;
-}
-
-#content {
-    padding-bottom: 0;
-}
-.pagination {
-    display: flex;
-    justify-content: left;
-}
-
 .btn-info {
     background-color: white;
     border-color: grey;
@@ -598,25 +311,6 @@ a:focus, a:hover {
     background-color: darkcyan;
     border: none;
 }
-
-.message {
-    display: inline-block;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: lightgray;
-    color: black;
-    font-size: 1em;
-}
-.titreCommentaires {
-    margin: 20px 0;
-    padding-top: 10px;
-}
-
-.erreur {
-    padding: 60px 0;
-}
-
 .btn-default {
     margin-left: 5px !important;
     background-color: #e6e6e6;
@@ -634,33 +328,311 @@ a:focus, a:hover {
     border-color: black;
 }
 
-.dropdown-menu {
-    margin-left: 5px;
-    background-color: white;
-    color: black !important;
-    font-family:"Gruppo", cursive ;
+/*********************************************
+            BLOGPOST LIST
+**********************************************/
+
+.fondIndex {
+    background: url("../img/fond-index-blur6.jpg");
+    background-position: top center;
 }
-.dropdown-menu a {
-    color: black !important;
+.dateBlogPostList {
+    font-size: 1em;
+}
+.h3BlogPostList {
+    margin-top: 10px;
+}
+.titreBlogPostList {
+    font-family: 'Lato', cursive;
+}
+.titreBlogPostList:hover, .cat {
+    color: orange;
+}
+.dateBlogPostList, .titreBlogPostList {
+    color: white;
+}
+.blogPostList {
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: rgb(119, 136, 143);
+    color: black;
+    opacity: 0.95;
+}
+.chapoBlogPostList {
+    text-align: center;
+    font-weight: bold;
+}
+.bp-info {
+    margin-top: 8px;
+}
+
+.bp-date {
+    margin-bottom: -15px;
+}
+.cat {
+    text-transform: uppercase;
+}
+.cat, .dateBlogPostList {
+    font-family: "Gruppo", cursive;
+}
+
+/*********************************************
+                    BLOGPOST
+**********************************************/
+
+.blogPost {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.titre {
+    font-size: 2.5em;
+}
+.auteurBlogPost {
+    font-size: 1.2em;
+}
+.auteurCommentaire {
+    font-size: 1em;
+}
+.auteurBlogPost, .auteurCommentaire{
+    font-style: italic;
+    font-weight: bold;
+}
+.chapo {
+    font-weight: bold;
+    font-size: 1.8em;
+}
+.chapo, .contenu {
+    text-align: justify;
+}
+.date {
+    font-size: 1em;
+    text-align: right;
+}
+.blogPostCat {
+    color: darkcyan;
+    font-family: "Gruppo", cursive;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5em;
+}
+
+/*********************************************
+                    COMMENTS
+**********************************************/
+
+.commentaire {
+    padding: 10px;
+    background-color: rgb(119, 136, 143);
+    margin-bottom: 10px;
+}
+.titreCommentaires {
+    margin: 20px 0;
+    padding-top: 10px;
+}
+.contenuCommentaire {
+    font-size: 1.2em;
+    padding: 10px 0;
+    border-bottom: 1px solid white;
+    color: white;
+}
+.auteurCommentaire {
+    font-size: 1em;
+}
+.dateCommentaire {
+    font-size: 0.7em;
+}
+
+/*********************************************
+                    ACTION
+**********************************************/
+
+.action {
+    margin-bottom: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgb(119, 136, 143);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.modifier, .supprimer {
+    color: black;
+    font-weight: bold;
+    width: 78px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.ajouter {
+    background-color: #d19e40 ;
+}
+.envoyer {
+    background-color: darkcyan;
+}
+.ajouter, .envoyer {
+    color: white;
+    font-weight: bold;
+}
+.modifier:hover {
+    background-color: #f0ad4e;
+}
+.supprimer:hover {
+    background-color: #ac2925;
+}
+
+/*********************************************
+                    LOGO
+**********************************************/
+
+.divLogo {
+    padding: 40px 0;
+}
+.divLogo-min {
+    padding: 25px 0;
+    margin-top: -15px;
+}
+.logoBody {
+    border: 2px solid black;
+    border-radius: 10%;
+    padding: 5px;
     background-color: white;
 }
 
-.dropdown-menu > li > a:hover {
-    background-color: orange;
+/*******************************************
+                  MESSAGE
+********************************************/
+
+.message {
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: lightgray;
+    color: black;
+    font-size: 1em;
+}
+.erreur {
+    padding: 60px 0;
 }
 
-.full-border {
-    border: 3px solid black;
-}
+/*******************************************
+                    IMG
+********************************************/
 
 .div-img-index {
     margin-bottom: 10px;
 }
-
 .img-index {
     border: 2px solid black;
     border-radius: 5px;
     margin-top: 10px;
     max-width: 155px;
     max-height: 117px;
+}
+.full-img {
+    width: 100%;
+}
+.full-border {
+    border: 3px solid black;
+}
+
+/*******************************************
+                @MEDIA > 768px
+********************************************/
+
+@media (min-width: 768px) {
+    .navbar-custom {
+        padding: 25px 0;
+        -webkit-transition: padding 0.3s;
+        -moz-transition: padding 0.3s;
+        transition: padding 0.3s;
+    }
+    .navbar-custom .navbar-brand {
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+    .navbar-custom.affix {
+        padding: 10px 0;
+    }
+    .navbar-custom.affix .navbar-brand {
+        font-size: 1.5em;
+    }
+    nav ul {
+        border-bottom: 5px solid grey;
+    }
+    header .container {
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+    header .intro-text .name, .about {
+        font-size: 2.75em;
+    }
+    header .intro-text .skills {
+        font-size: 1.75em;
+    }
+    .envoyer {
+        margin-bottom: 15px;
+    }
+}
+
+/**********************************************
+                @MEDIA < 768 px
+***********************************************/
+
+@media (max-width: 767px) {
+    section {
+        padding: 50px 0 !important;
+    }
+    .row {
+        margin: 0 5px;
+    }
+    .reduce {
+        font-size: 1.25em;
+        text-align: center;
+    }
+    .blogPostList {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+    .titreBlogPostList {
+        font-size: 0.8em;
+    }
+    .chapoBlogPostList {
+        font-size: 1.2em;
+    }
+    .titre {
+        font-size: 1.8em !important;
+    }
+    .chapo {
+        font-size: 1.5em !important;
+    }
+    .contenu {
+        font-size: 1.2em !important;
+    }
+    .commentaires h3 {
+        font-size: 1.3em !important;
+    }
+    .commentaires {
+        margin-top: -10px;
+    }
+    .pagination {
+        justify-content: center !important;
+    }
+    footer {
+        margin-top: 20px;
+    }
+    div.footer-above h4, div.footer-above p {
+        font-size: 1.1em;
+    }
+    #ulm {
+        margin-top: -50px !important;
+    }
+    #about h2, #contact h2 {
+        font-size: 2em;
+    }
+    .date {
+        text-align: center !important;
+        padding: 0 !important;
+        font-size: 0.8em !important;
+    }
 }

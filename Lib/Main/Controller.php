@@ -5,6 +5,21 @@
  * Date: 25/09/2017
  * Time: 10:13
  */
+
+/**
+ * Class Controller
+ * This is the heart of the application.
+ * Each user request is redirected on the bootstrap.php file which create an instantiation of Controller class and the method run() is launched.
+ * The getMatchedRoute() method launched in the run() method recover each route define in the routes.xml file by making instances of Route class.
+ * These routes are stocked in the array $routes attribute of the Controller.
+ * After that the getMatchedRoute() method search in the $routes attribute which route correspond to the request user and if this route has variables,
+ * each value is set in the matched route instance.
+ * The $route attribute of the Controller is set with the matched route.
+ * The execute() method is launched. This method execute the view requested which is contained in the $view attribute of the matched route
+ * stocked in $route attribute of the Controller .
+ * The send() method allows display of the user request.
+ *
+ */
 namespace Main;
 
 use Entity\BlogPost;
@@ -19,9 +34,9 @@ class Controller
     protected $visitorRequest;
     protected $route;
     protected $routes = [];
-    protected $actionView;
-    protected $page = null;
-    protected $user = null;
+    protected $config;
+    protected $page;
+    protected $user;
 
     public function run()
     {
@@ -70,7 +85,7 @@ class Controller
                     }
 
                     $this->setRoute($route);
-                    $this->setActionView($this->route()->view());
+                    $this->page->setFileView(__DIR__ . '/../../Views/'. $this->route->view() . '.php');
                     $_GET = array_merge($_GET, $route->vars());
 
                     return;
@@ -81,17 +96,13 @@ class Controller
         throw new \RuntimeException('Aucune route ne correspond à l\'URL');
     }
 
-    public function addRoute(Route $route)
-    {
-        if (!in_array($route, $this->routes))
-        {
-            $this->routes[] = $route;
-        }
-    }
+    /***********************************************
+                        EXECUTE
+     ***********************************************/
 
     public function execute()
     {
-        $actionRequest = 'execute'.ucfirst($this->actionView());
+        $actionRequest = 'execute'.ucfirst($this->route->view());
         if (!is_callable([$this, $actionRequest]))
         {
             throw new \RuntimeException('L\'action demandée est impossible');
@@ -100,9 +111,13 @@ class Controller
         $this->$actionRequest();
     }
 
+    /***********************************************
+                      EXECUTE SHOW
+     ***********************************************/
+
     public function executeAccueil()
     {
-        // affichage de la page d'accueil, page statique.
+        //  display home page. Static page.
     }
 
     public function executeIndex()
@@ -135,21 +150,15 @@ class Controller
 
     }
 
-    public function postData($key)
-    {
-        return isset($_POST[$key])? $_POST[$key] : null;
-    }
-
-    public function getData($key)
-    {
-        return isset($_GET[$key])? $_GET[$key] : null;
-    }
+    /***********************************************
+                    EXECUTE INSERT
+     ***********************************************/
 
     public function executeInsertBlogPost()
     {
         $this->page->addVars(['tailleMax' => Image::MAX_SIZE]);
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
 
             $blogPost = new BlogPost([
@@ -205,6 +214,43 @@ class Controller
         }
     }
 
+    public function executeInsertComment()
+    {
+        $blogPostManager = new BlogPostManager;
+        $blogPost = $blogPostManager->getUnique($this->getData('blogPost'));
+
+        $this->page->addVars(['blogPost' => $blogPost]);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $comment = new Comment([
+                'blogPost' => $this->getData('blogPost'),
+                'auteur' => $this->postData('auteur'),
+                'contenu' => $this->postData('contenu')
+            ]);
+
+            if ($comment->isValid())
+            {
+
+                $commentManager = new CommentManager;
+                $commentManager->insert($comment);
+
+                $this->user->setMessage('Votre commentaire a bien été ajouté');
+                $this->user->setAttribute('auteur', $comment->auteur());
+
+                $this->redirect('/blogPost/'. $this->getData('blogPost') . '/p1');
+            }
+            else
+            {
+                $this->returnFormError($comment);
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+
     public function executeInsertImage(Image $image)
     {
         move_uploaded_file($_FILES[$image::UPLOAD]['tmp_name'], $image::IMG_DIR . $image->serverFile());
@@ -212,6 +258,10 @@ class Controller
         $imageManager = new ImageManager;
         $imageManager->insert($image);
     }
+
+    /***********************************************
+                    EXECUTE UPDATE
+     ***********************************************/
 
     public function executeUpdateBlogPost()
     {
@@ -223,7 +273,7 @@ class Controller
 
         $this->page->addVars(['tailleMax' => Image::MAX_SIZE, 'blogPost' => $blogPost, 'actualImage' => $actualImage]);
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $blogPost = new BlogPost([
                 'titre' => $this->postData('titre'),
@@ -291,10 +341,44 @@ class Controller
         $imageManager->update($image);
     }
 
-    public function deleteImageFile ($serverFileImage)
+    public function executeUpdateComment()
     {
-        unlink(Image::IMG_DIR.$serverFileImage);
+        $commentManager = new commentManager;
+        $comment = $commentManager->getUnique($this->getData('id'));
+        $blogPostId = $comment->blogPost();
+
+        $blogPostManager = new BlogPostManager;
+        $blogPost = $blogPostManager->getUnique($blogPostId);
+
+        $this->page->addVars(['comment' => $comment, 'blogPost' => $blogPost]);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $comment = new Comment([
+                'id' => $this->getData('id'),
+                'blogPost' => $blogPostId,
+                'auteur' => $this->postData('auteur'),
+                'contenu' => $this->postData('contenu')
+            ]);
+
+            if ($comment->isValid())
+            {
+                $commentManager->update($comment);
+
+                $this->user->setMessage('Le commentaire a bien été modifié');
+
+                $this->redirect('/blogPost/'. $blogPostId . '/p1');
+            }
+        }
+        else
+        {
+            return;
+        }
     }
+
+    /***********************************************
+                    EXECUTE DELETE
+     ***********************************************/
 
     public function executeDeleteBlogPost()
     {
@@ -313,78 +397,6 @@ class Controller
         $this->redirect('/index/p1/cat/all');
     }
 
-    public function executeInsertComment()
-    {
-        $blogPostManager = new BlogPostManager;
-        $blogPost = $blogPostManager->getUnique($this->getData('blogPost'));
-
-        $this->page->addVars(['blogPost' => $blogPost]);
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $comment = new Comment([
-                'blogPost' => $this->getData('blogPost'),
-                'auteur' => $this->postData('auteur'),
-                'contenu' => $this->postData('contenu')
-            ]);
-
-            if ($comment->isValid())
-            {
-
-                $commentManager = new CommentManager;
-                $commentManager->insert($comment);
-
-                $this->user->setMessage('Votre commentaire a bien été ajouté');
-                $this->user->setAttribute('auteur', $comment->auteur());
-
-                $this->redirect('/blogPost/'. $this->getData('blogPost') . '/p1');
-            }
-            else
-            {
-               $this->returnFormError($comment);
-            }
-        }
-        else
-        {
-            return;
-        }
-    }
-
-    public function executeUpdateComment()
-    {
-        $commentManager = new commentManager;
-        $comment = $commentManager->getUnique($this->getData('id'));
-        $blogPostId = $comment->blogPost();
-
-        $blogPostManager = new BlogPostManager;
-        $blogPost = $blogPostManager->getUnique($blogPostId);
-
-        $this->page->addVars(['comment' => $comment, 'blogPost' => $blogPost]);
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            $comment = new Comment([
-               'id' => $this->getData('id'),
-               'blogPost' => $blogPostId,
-               'auteur' => $this->postData('auteur'),
-               'contenu' => $this->postData('contenu')
-            ]);
-
-            if ($comment->isValid())
-            {
-                $commentManager->update($comment);
-
-                $this->user->setMessage('Le commentaire a bien été modifié');
-
-                $this->redirect('/blogPost/'. $blogPostId . '/p1');
-            }
-        }
-        else
-        {
-            return;
-        }
-    }
-
     public function executeDeleteComment()
     {
         $commentManager = new CommentManager;
@@ -395,6 +407,15 @@ class Controller
         $this->redirect('/blogPost/'. $blogPost . '/p1');
     }
 
+    public function deleteImageFile ($serverFileImage)
+    {
+        unlink(Image::IMG_DIR.$serverFileImage);
+    }
+
+    /***********************************************
+                RETURN FORM ERROR
+     ***********************************************/
+
     public function returnFormError(Entity $entity)
     {
         $erreurString = '';
@@ -404,6 +425,10 @@ class Controller
         }
         $this->user->setMessage('Oops !<br />' . $erreurString);
     }
+
+    /***********************************************
+                     REDIRECTION
+     ***********************************************/
 
     public function redirect($redirection)
     {
@@ -416,6 +441,10 @@ class Controller
         $this->page->setFileView(__DIR__. '/../../Errors/404.html');
         $this->send();
     }
+
+    /***********************************************
+                        SEND
+     ***********************************************/
 
     public function send()
     {
@@ -433,31 +462,40 @@ class Controller
         exit(ob_get_clean());
     }
 
-    // SETTERS
+    /***********************************************
+                  RETURN $_POST/$_GET
+     ***********************************************/
+
+    public function postData($key)
+    {
+        return isset($_POST[$key])? $_POST[$key] : null;
+    }
+
+    public function getData($key)
+    {
+        return isset($_GET[$key])? $_GET[$key] : null;
+    }
+
+    /***********************************************
+                       SETTERS
+     ***********************************************/
+
+    public function addRoute(Route $route)
+    {
+        if (!in_array($route, $this->routes))
+        {
+            $this->routes[] = $route;
+        }
+    }
 
     public function setRoute(Route $route)
     {
         $this->route = $route;
     }
 
-    public function setActionView($actionView)
-    {
-        if (!is_string($actionView) || empty($actionView))
-        {
-            throw new \InvalidArgumentException('La vue doit être une chaîne de caractère valide');
-        }
-
-        $this->actionView = $actionView;
-
-        $this->page->setFileView(__DIR__.'/../../Views/'.$actionView.'.php');
-    }
-
-    // GETTERS
-
-    public function actionView()
-    {
-        return $this->actionView;
-    }
+    /***********************************************
+                      GETTERS
+     ***********************************************/
 
     public function page()
     {

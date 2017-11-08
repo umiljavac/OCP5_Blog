@@ -6,6 +6,11 @@
  * Time: 16:02
  */
 
+/**
+ * Class Image is used to represent or manipulate an image.
+ * This class extends the Entity class.
+ */
+
 namespace Entity;
 
 
@@ -44,6 +49,10 @@ class Image extends Entity
     {
         return !empty($this->userFile);
     }
+
+    /***********************************************
+                      SETTERS
+     ***********************************************/
 
     public function setBlogPostId($blogPostId)
     {
@@ -101,6 +110,10 @@ class Image extends Entity
             $this->size = $size;
         }
     }
+
+    /***********************************************
+                      GETTERS
+     ***********************************************/
 
     public function blogPostId()
     {

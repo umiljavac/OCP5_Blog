@@ -6,6 +6,11 @@
  * Time: 16:04
  */
 
+/**
+ * Class ImageManager is used to request the Image table in the database.
+ * Methods allow to select, insert, update, delete entries in this table.
+ */
+
 namespace Model;
 
 

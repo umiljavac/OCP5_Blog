@@ -6,6 +6,13 @@
  * Time: 23:30
  */
 
+/**
+ *Abstract class Entity implements ArrayAccess interface
+ * used as parent class of BlogPost, Image, Comment classes.
+ * The constructor need an array of data and use the Hydrator trait to set the properties of the instance of the inherited class
+ * Constants are used to reply a message when the form used by the user to insert or update an Entity child (blogpost, Comment, Image) is incomplete or invalid.
+ */
+
 namespace Main;
 
 
@@ -35,7 +42,9 @@ abstract class Entity implements \ArrayAccess
         return empty($this->id);
     }
 
-    // SETTERS
+    /***********************************************
+                        SETTERS
+     ***********************************************/
 
     public function setId($id)
     {
@@ -70,7 +79,9 @@ abstract class Entity implements \ArrayAccess
         $this->dateModif = $dateModif;
     }
 
-    // GETTERS
+    /***********************************************
+                        GETTERS
+     ***********************************************/
 
     public function id()
     {

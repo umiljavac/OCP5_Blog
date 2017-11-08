@@ -5,6 +5,12 @@
  * Date: 25/09/2017
  * Time: 22:57
  */
+
+/**
+ * Class BlogPostManager is used to request the BlogPost table in the database.
+ * Methods allow to select, insert, update, delete entries in this table.
+ */
+
 namespace Model;
 
 use \Entity\BlogPost;

@@ -6,6 +6,12 @@
  * Time: 09:01
  */
 
+/**
+ * Class Config parse the preferences.xml file.
+ * The variables are stocked in attribute $vars and define the number of blogposts or comments for each page.
+ * In concerned views, like the index of all blogposts, the getConfig() method is used to make a pagination.
+ */
+
 namespace Main;
 
 

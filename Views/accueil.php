@@ -6,7 +6,7 @@
             <div class="col-lg-offset-3 col-lg-6">
                 <div class="intro-text">
                     <span class="name">Ulrich Miljavac</span>
-                    <div class="divLogo">
+                    <div class="divLogo text-center">
                         <img class="logoBody" src="/img/logo3min.png" alt="logo">
                     </div>
                     <span class="skills">J'utilise HTML pour le dire, CSS pour y mettre la forme, Javascript pour ouvrir des perspectives, PHP pour dialoguer avec le fond des choses, SQL pour ne rien oublier. </span>
@@ -62,7 +62,7 @@
             <div class="col-lg-8 col-lg-offset-2">
                 <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                 <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                <form name="sentMessage" id="contactForm" novalidate>
+               <form name="sentMessage" id="contactForm" novalidate>
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
                             <label>Nom ou Pseudo</label>

@@ -5,6 +5,11 @@
  * Date: 05/10/2017
  * Time: 11:35
  */
+
+/**
+ * Class User is used to create and return session variables and set cookies if needed.
+ */
+
 namespace Main;
 
 session_start();

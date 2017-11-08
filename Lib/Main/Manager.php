@@ -6,6 +6,12 @@
  * Time: 10:20
  */
 
+/**
+ * Abstract class Manager
+ * Parent class of all managers.
+ * The constructor call the static function getMysqlConnectionWithPDO() of DAOFactory class
+ */
+
 namespace Main;
 
 

@@ -6,6 +6,10 @@
  * Time: 10:15
  */
 
+/**
+ * Class DAOFactory create an instance of PDO and the connexion with the data base.
+ * change the parameter 'dsn', 'username' and 'passwd' according to your own configuration.
+ */
 namespace Main;
 
 

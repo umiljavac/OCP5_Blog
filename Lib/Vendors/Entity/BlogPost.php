@@ -6,6 +6,11 @@
  * Time: 23:06
  */
 
+/**
+ * Class BlogPost is used to represent or manipulate a blogpost.
+ * This class extends the Entity class.
+ */
+
 namespace Entity;
 
 use \Main\Entity;
@@ -25,7 +30,9 @@ class BlogPost extends Entity
     }
 
 
-    //SETTERS
+    /***********************************************
+                        GETTERS
+     ***********************************************/
 
     public function setTitre($titre)
     {
@@ -51,6 +58,10 @@ class BlogPost extends Entity
     {
         $this->categorie = $cat;
     }
+
+    /***********************************************
+                        GETTERS
+     ***********************************************/
 
     public function titre()
     {
