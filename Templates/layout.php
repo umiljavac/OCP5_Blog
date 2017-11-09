@@ -18,7 +18,7 @@
     <link href="/css/freelancerUl.css" rel="stylesheet"> <!-- remettre freelance.min.css après l'avoir linéarisé -->
 
     <!-- Custom Fonts -->
-    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"> <!-- remettre font-awesome.min.css après l'avoir linéarisé -->
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Gruppo" rel="stylesheet">
@@ -141,7 +141,7 @@
 <script src="/js/contact_me.js"></script>
 
 <!-- Theme JavaScript -->
-<script src="/js/freelancer.js"></script> <!-- remettre le fichier min -->
+<script src="/js/freelancer.js"></script>
 
 </body>
 
