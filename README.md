@@ -8,7 +8,7 @@ Just click on **`Clone or download`** green button of this repository.
 Make your web server pointing to the **Web** directory inside the **OCP5_Blog** directory.  
 Create your Database with the **OCP5_blog.sql** file contained in **OCP5_Blog/Config/sql** directory.  
 It's almost done but you may have to adjust the `Data Source Name`, `username` or `password` of your PDO instance.  
-So, if needed, go to **OCP5_Blog/Lib/Main/PDOFactory.php** and configure your connexion.  
+So, if needed, go to **OCP5_Blog/Lib/Main/PDOFactory.php** and configure your connection.  
   
 That's all ! I think.. 
 
