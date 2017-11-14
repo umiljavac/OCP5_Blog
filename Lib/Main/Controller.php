@@ -91,9 +91,17 @@ class Controller
                     return;
                 }
             }
-
-        $this->redirect404();
-        throw new \RuntimeException('Aucune route ne correspond à l\'URL');
+        if ($_SESSION['error'] === 'errorDB')
+        {
+            $_SESSION['error'] = '';
+            $this->redirectErrorDB();
+            throw new \RuntimeException('Accès impossible à la base de données');
+        }
+        else
+        {
+            $this->redirect404();
+            throw new \RuntimeException('Aucune route ne correspond à l\'URL');
+        }
     }
 
     /***********************************************
@@ -439,6 +447,12 @@ class Controller
     public function redirect404()
     {
         $this->page->setFileView(__DIR__. '/../../Errors/404.html');
+        $this->send();
+    }
+
+    public function redirectErrorDB()
+    {
+        $this->page->setFileView(__DIR__. '/../../Errors/errorDB.html');
         $this->send();
     }
 
