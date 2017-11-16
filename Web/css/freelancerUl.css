@@ -635,4 +635,17 @@ footer .footer-below {
         padding: 0 !important;
         font-size: 0.8em !important;
     }
+     #content {
+        margin-bottom: -70px !important;
+    }
+     .asterisque {
+         margin-top: 15px;
+     }
+}
+
+/******************************************
+                SPECIAL GUEST !
+********************************************/
+.asterisque {
+    font-size: 0.8em;
 }

@@ -10,14 +10,15 @@
                 rédigé par <i><?= htmlspecialchars($blogPost['auteur']) ?></i>
             </legend>
             <div class="form-group">
-                <label for="auteur">Auteur : </label>
+                <label for="auteur">* Auteur : </label>
                 <input id="auteur" type="text" name="auteur" value="<?= $user->getAttribute('auteur') ?>" class="form-control">
             </div>
             <div class="form-group">
-                <label for="contenu">Contenu du commentaire : </label>
+                <label for="contenu">* Contenu du commentaire : </label>
                 <textarea id="contenu" rows="5" name="contenu" type="textarea" class="form-control"><?php if (isset($_POST['contenu'])) echo $_POST['contenu']?></textarea>
             </div>
             <button class="btn envoyer" type="submit">Envoyer</button>
+            <p class="asterisque">* l'astérisque à horreur du vide</p>
         </form>
     </div>
 </div>
