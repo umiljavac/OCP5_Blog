@@ -9,14 +9,15 @@
                 rédigé par <i><?= htmlspecialchars($blogPost['auteur']) ?></i>
             </legend>
             <div class="form-group">
-                <label for="auteur">Auteur : </label>
+                <label for="auteur">* Auteur : </label>
                 <input id="auteur" type="text" name="auteur" class="form-control" value="<?= $comment['auteur'] ?>">
             </div>
             <div class="form-group">
-                <label for="contenu">Contenu : </label>
+                <label for="contenu">* Contenu : </label>
                 <textarea id="contenu" type="textarea" name="contenu" class="form-control"><?= $comment['contenu'] ?></textarea>
             </div>
             <button class="btn envoyer" type="submit">Modifier</button>
+            <p class="asterisque">* l'astérisque a horreur du vide</p>
         </form>
     </div>
 </div>

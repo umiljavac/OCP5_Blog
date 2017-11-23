@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <routes>
-    <route url="/accueil" view="accueil"></route>
+    <route url="/" view="accueil"></route>
     <route url="/index/p([0-9]+)/cat/([a-z]+)" view="index" vars="page,cat"></route>
     <route url="/blogPost/([0-9]+)/p([0-9]+)" view="showBlogPost" vars="id,page"></route>
     <route url="/blogPost/insert" view="insertBlogPost"></route>

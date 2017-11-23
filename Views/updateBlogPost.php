@@ -10,19 +10,19 @@
                 rédigé par <i><?= htmlspecialchars($blogPost['auteur']) ?></i>
             </legend>
             <div class="form-group">
-                <label for="auteur">Auteur : </label>
+                <label for="auteur">* Auteur : </label>
                 <input id="auteur" type="text" name="auteur" class="form-control" value="<?= htmlspecialchars($blogPost['auteur']) ?>">
             </div>
             <div class="form-group">
-                <label for="titre">Titre : </label>
+                <label for="titre">* Titre : </label>
                 <input id="titre" name="titre" type="text" class="form-control" value="<?= htmlspecialchars($blogPost['titre']) ?>">
             </div>
             <div class="form-group">
-                <label for="chapo">Introduction, mise en bouche ou chapô : </label>
+                <label for="chapo">* Introduction, mise en bouche ou chapô : </label>
                 <textarea id="chapo" type="textarea" name="chapo" class="form-control"><?= htmlspecialchars($blogPost['chapo']) ?></textarea>
             </div>
             <div class="form-group">
-                <label for="contenu">Contenu : </label>
+                <label for="contenu">* Contenu : </label>
                 <textarea id="contenu" type="textarea" rows="10" name="contenu" class="form-control"><?= htmlspecialchars($blogPost['contenu']) ?></textarea>
             </div>
             <div class="form-group">
@@ -51,6 +51,7 @@
                 <input type="file" name="image">
             </div>
             <button class="btn envoyer" type="submit">Modifier</button>
+            <p class="asterisque">* l'astérisque a horreur du vide</p>
         </form>
     </div>
 </div>
