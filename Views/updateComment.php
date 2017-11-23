@@ -17,7 +17,7 @@
                 <textarea id="contenu" type="textarea" name="contenu" class="form-control"><?= $comment['contenu'] ?></textarea>
             </div>
             <button class="btn envoyer" type="submit">Modifier</button>
-            <p class="asterisque">* l'astérisque à horreur du vide</p>
+            <p class="asterisque">* l'astérisque a horreur du vide</p>
         </form>
     </div>
 </div>

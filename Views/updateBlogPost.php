@@ -51,7 +51,7 @@
                 <input type="file" name="image">
             </div>
             <button class="btn envoyer" type="submit">Modifier</button>
-            <p class="asterisque">* l'astérisque à horreur du vide</p>
+            <p class="asterisque">* l'astérisque a horreur du vide</p>
         </form>
     </div>
 </div>

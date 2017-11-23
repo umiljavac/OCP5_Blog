@@ -18,7 +18,7 @@
                 <textarea id="contenu" rows="5" name="contenu" type="textarea" class="form-control"><?php if (isset($_POST['contenu'])) echo $_POST['contenu']?></textarea>
             </div>
             <button class="btn envoyer" type="submit">Envoyer</button>
-            <p class="asterisque">* l'astérisque à horreur du vide</p>
+            <p class="asterisque">* l'astérisque a horreur du vide</p>
         </form>
     </div>
 </div>

@@ -42,7 +42,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="/accueil#page-top">Entrez Libres</a>
+            <a class="navbar-brand" href="/#page-top">Entrez Libres</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -58,10 +58,10 @@
                     <a href="/blogPost/insert">Ecrire un BlogPost</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="/accueil#about">A propos</a>
+                    <a href="/#about">A propos</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="/accueil#contact">Contact</a>
+                    <a href="/#contact">Contact</a>
                 </li>
             </ul>
         </div>
