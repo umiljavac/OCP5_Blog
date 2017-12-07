@@ -21,6 +21,7 @@ abstract class Manager
 
     public function __construct()
     {
-        $this->db = DAOFactory::getMysqlConnectionWithPDO();
+        $daoFactory = new DAOFactory();
+        $this->db = $daoFactory->getMysqlConnectionWithPDO();
     }
 }

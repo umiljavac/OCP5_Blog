@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<preferences>
+    <connection var="host" value="localhost"></connection>
+    <connection var="dbname" value="OCP5_blog"></connection>
+    <connection var="username" value="root"></connection>
+    <connection var="password" value="root"></connection>
+</preferences>
