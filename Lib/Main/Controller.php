@@ -6,20 +6,7 @@
  * Time: 10:13
  */
 
-/**
- * Class Controller
- * This is the heart of the application.
- * Each user request is redirected on the bootstrap.php file which create an instantiation of Controller class and the method run() is launched.
- * The getMatchedRoute() method launched in the run() method recover each route define in the routes.xml file by making instances of Route class.
- * These routes are stocked in the array $routes attribute of the Controller.
- * After that the getMatchedRoute() method search in the $routes attribute which route correspond to the request user and if this route has variables,
- * each value is set in the matched route instance.
- * The $route attribute of the Controller is set with the matched route.
- * The execute() method is launched. This method execute the view requested which is contained in the $view attribute of the matched route
- * stocked in $route attribute of the Controller .
- * The send() method allows display of the user request.
- *
- */
+
 namespace Main;
 
 use Entity\BlogPost;
@@ -31,78 +18,17 @@ use Model\ImageManager;
 
 class Controller
 {
-    protected $visitorRequest;
-    protected $route;
-    protected $routes = [];
-    protected $config;
-    protected $page;
-    protected $user;
+    protected $app;
+    protected $page = null;
+    protected $actionView;
 
-    public function run()
+    public function __construct($actionView, $app)
     {
-        $this->config = new Config;
-        $this->user = new User;
-        $this->page = new Page;
-        $this->visitorRequest = $_SERVER['REQUEST_URI'];
-        $this->getMatchedRoute();
-        $this->execute();
-        $this->send();
+        $this->app = $app;
+        $this->page = new Page();
+        $this->setActionView($actionView);
     }
 
-    public function getMatchedRoute()
-    {
-        $xml = new \DOMDocument();
-        $xml->load(__DIR__.'/../../Config/routes.xml');
-        $xmlRoutes = $xml->getElementsByTagName('route');
-
-        foreach ($xmlRoutes as $route)
-        {
-            $vars = [];
-
-            if ($route->hasAttribute('vars'))
-            {
-                $vars =  explode(',', $route->getAttribute('vars'));
-            }
-
-            $this->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('view'), $vars));
-        }
-
-        foreach ($this->routes as $route) {
-
-                if (($varsValues = $route->matchUrl($this->visitorRequest())) !== false)
-                {
-                    if ($route->hasVar()) {
-                        $varsNames = $route->varsNames();
-                        $listVars = [];
-                        foreach ($varsValues as $key => $value)
-                        {
-                            if ($key !== 0)
-                            {
-                                $listVars[$varsNames[$key-1]] = $value;
-                            }
-                        }
-                        $route->setVars($listVars);
-                    }
-
-                    $this->setRoute($route);
-                    $this->page->setFileView(__DIR__ . '/../../Views/'. $this->route->view() . '.php');
-                    $_GET = array_merge($_GET, $route->vars());
-
-                    return;
-                }
-            }
-        if ($_SESSION['error'] === 'errorDB')
-        {
-            $_SESSION['error'] = '';
-            $this->redirectErrorDB();
-            throw new \RuntimeException('Accès impossible à la base de données');
-        }
-        else
-        {
-            $this->redirect404();
-            throw new \RuntimeException('Aucune route ne correspond à l\'URL');
-        }
-    }
 
     /***********************************************
                         EXECUTE
@@ -110,73 +36,81 @@ class Controller
 
     public function execute()
     {
-        $actionRequest = 'execute'.ucfirst($this->route->view());
+        $actionRequest = 'execute'.ucfirst($this->actionView());
         if (!is_callable([$this, $actionRequest]))
         {
             throw new \RuntimeException('L\'action demandée est impossible');
         }
 
-        $this->$actionRequest();
+        $this->$actionRequest($this->app->userRequest());
     }
 
     /***********************************************
-                      EXECUTE SHOW
+                    EXECUTE SHOW
      ***********************************************/
 
     public function executeAccueil()
     {
-        //  display home page. Static page.
     }
 
-    public function executeIndex()
+    public function executeIndex(UserRequest $userRequest)
     {
-        $categorie = $this->getData('cat');
+        $categorie = $userRequest->getData('cat');
+        $targetPage = $userRequest->getData('page');
+        $blogPostsPerPage = $this->app->config()->getConfig('blogPosts');
 
         $blogPostManager = new BlogPostManager;
-        $blogPostList = $blogPostManager->getList($categorie, $this->config->getConfig('blogPosts'), $this->getData('page'));
+        $blogPostList = $blogPostManager->getList($categorie, $blogPostsPerPage, $targetPage);
         $nbBlogPost = $blogPostManager->count($categorie);
 
         $imageManager = new ImageManager;
-        $imageList = $imageManager->getList($categorie, $this->config->getConfig('blogPosts'), $this->getData('page'));
+        $imageList = $imageManager->getList($categorie, $blogPostsPerPage, $userRequest->getData('page'));
 
-        $this->page->addVars(['blogPostList' => $blogPostList, 'nbBlogPost' => $nbBlogPost, 'categorie' => $categorie, 'imageList' => $imageList]);
+        $this->page->addVars(['blogPostList' => $blogPostList, 'nbBlogPost' => $nbBlogPost, 'categorie' => $categorie, 'imageList' => $imageList, 'user' => $this->app->user(), 'blogPostsPerPage' => $blogPostsPerPage]);
     }
 
-    public function executeShowBlogPost()
+    public function executeShowBlogPost(UserRequest $userRequest)
     {
+        $blogPostId = $userRequest->getData('id');
+        $targetPage = $userRequest->getData('page');
+        $commentsPerPage = $this->app->config()->getConfig('comments');
+
+
         $blogPostManager = new BlogPostManager;
-        $blogPost = $blogPostManager->getUnique($this->getData('id'));
+        $blogPost = $blogPostManager->getUnique($blogPostId);
+
+        if (empty($blogPost))
+        {
+            $this->app->serverResponse()->redirect404();
+        }
 
         $imageManager = new ImageManager;
-        $image = $imageManager->getUnique($this->getData('id'));
+        $image = $imageManager->getUnique($blogPostId);
 
         $commentManager = new CommentManager;
-        $commentList = $commentManager->getList($this->getData('id'), $this->config->getConfig('comments'), $this->getData('page'));
-        $nbCommentaires = $commentManager->count($this->getData('id'));
+        $commentList = $commentManager->getList($blogPostId, $commentsPerPage, $targetPage);
+        $nbCommentaires = $commentManager->count($blogPostId);
 
-        $this->page->addVars(['blogPost' => $blogPost, 'image' => $image, 'commentList' => $commentList, 'nbCommentaires' => $nbCommentaires]);
-
+        $this->page->addVars(['blogPost' => $blogPost, 'image' => $image, 'commentList' => $commentList, 'nbCommentaires' => $nbCommentaires, 'user' => $this->app->user(), 'commentsPerPage' => $commentsPerPage]);
     }
 
     /***********************************************
                     EXECUTE INSERT
      ***********************************************/
 
-    public function executeInsertBlogPost()
+    public function executeInsertBlogPost(UserRequest $userRequest)
     {
-        $this->page->addVars(['tailleMax' => Image::MAX_SIZE]);
+        $this->page->addVars(['tailleMax' => Image::MAX_SIZE, 'user' => $this->app->user()]);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        if ($userRequest->requestMethod() === 'POST')
         {
-
             $blogPost = new BlogPost([
-                'titre' => $this->postData('titre'),
-                'auteur' => $this->postData('auteur'),
-                'chapo' => $this->postData('chapo'),
-                'contenu' => $this->postData('contenu'),
-                'categorie' => $this->postData('categorie')
+                'titre' => $userRequest->postData('titre'),
+                'auteur' => $userRequest->postData('auteur'),
+                'chapo' => $userRequest->postData('chapo'),
+                'contenu' => $userRequest->postData('contenu'),
+                'categorie' => $userRequest->postData('categorie')
             ]);
-
 
             if ($blogPost->isValid())
             {
@@ -192,10 +126,10 @@ class Controller
                         $image->setBlogPostId($blogPostId);
                         $this->executeInsertImage($image);
 
-                        $this->user->setMessage('Votre blogpost a bien été ajouté avec une illustration');
-                        $this->user->setAttribute('auteur', $blogPost->auteur());
+                        $this->app->user()->setMessage('Votre blogpost a bien été ajouté avec une illustration');
+                        $this->app->user()->setAttribute('auteur', $blogPost->auteur());
 
-                        $this->redirect('/index/p1/cat/all');
+                        $this->app->serverResponse()->redirect('/index/p1/cat/all.html');
                     }
                     else
                     {
@@ -206,9 +140,9 @@ class Controller
                 {
                     $blogPostManager->insert($blogPost);
 
-                    $this->user->setMessage('Votre blogpost a bien été ajouté sans illustration');
-                    $this->user->setAttribute('auteur', $blogPost->auteur());
-                    $this->redirect('/index/p1/cat/all');
+                    $this->app->user()->setMessage('Votre blogpost a bien été ajouté sans illustration');
+                    $this->app->user()->setAttribute('auteur', $blogPost->auteur());
+                    $this->app->serverResponse()->redirect('/index/p1/cat/all.html');
                 }
             }
             else
@@ -222,31 +156,31 @@ class Controller
         }
     }
 
-    public function executeInsertComment()
+    public function executeInsertComment(UserRequest $userRequest)
     {
+        $blogPostId = $userRequest->getData('blogPostId');
         $blogPostManager = new BlogPostManager;
-        $blogPost = $blogPostManager->getUnique($this->getData('blogPost'));
+        $blogPost = $blogPostManager->getUnique($blogPostId);
 
-        $this->page->addVars(['blogPost' => $blogPost]);
+        $this->page->addVars(['blogPost' => $blogPost, 'user' => $this->app->user()]);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        if ($userRequest->requestMethod() === 'POST')
         {
             $comment = new Comment([
-                'blogPost' => $this->getData('blogPost'),
-                'auteur' => $this->postData('auteur'),
-                'contenu' => $this->postData('contenu')
+                'blogPost' => $blogPostId,
+                'auteur' => $userRequest->postData('auteur'),
+                'contenu' => $userRequest->postData('contenu')
             ]);
 
             if ($comment->isValid())
             {
-
                 $commentManager = new CommentManager;
                 $commentManager->insert($comment);
 
-                $this->user->setMessage('Votre commentaire a bien été ajouté');
-                $this->user->setAttribute('auteur', $comment->auteur());
+                $this->app->user()->setMessage('Votre commentaire a bien été ajouté');
+                $this->app->user()->setAttribute('auteur', $comment->auteur());
 
-                $this->redirect('/blogPost/'. $this->getData('blogPost') . '/p1');
+                $this->app->serverResponse()->redirect('/blogPost/'. $blogPostId . '/p1.html');
             }
             else
             {
@@ -268,28 +202,34 @@ class Controller
     }
 
     /***********************************************
-                    EXECUTE UPDATE
+    EXECUTE UPDATE
      ***********************************************/
 
-    public function executeUpdateBlogPost()
+    public function executeUpdateBlogPost(UserRequest $userRequest)
     {
+        $blogPostId = $userRequest->getData('id');
         $blogPostManager = new BlogPostManager;
-        $blogPost = $blogPostManager->getUnique($this->getData('id'));
+        $blogPost = $blogPostManager->getUnique($blogPostId);
+
+        if (empty($blogPost))
+        {
+            $this->app->serverResponse()->redirect404();
+        }
 
         $imageManager = new ImageManager;
-        $actualImage = $imageManager->getUnique($this->getData('id'));
+        $actualImage = $imageManager->getUnique($blogPostId);
 
-        $this->page->addVars(['tailleMax' => Image::MAX_SIZE, 'blogPost' => $blogPost, 'actualImage' => $actualImage]);
+        $this->page->addVars(['tailleMax' => Image::MAX_SIZE, 'blogPost' => $blogPost, 'actualImage' => $actualImage, 'user' => $this->app->user()]);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        if ($userRequest->requestMethod() === 'POST')
         {
             $blogPost = new BlogPost([
-                'titre' => $this->postData('titre'),
-                'auteur' => $this->postData('auteur'),
-                'chapo' => $this->postData('chapo'),
-                'contenu' => $this->postData('contenu'),
-                'categorie' => $this->postData('categorie'),
-                'id' => $this->getData('id')
+                'titre' => $userRequest->postData('titre'),
+                'auteur' => $userRequest->postData('auteur'),
+                'chapo' => $userRequest->postData('chapo'),
+                'contenu' => $userRequest->postData('contenu'),
+                'categorie' => $userRequest->postData('categorie'),
+                'id' => $blogPostId
             ]);
 
             $image = new Image;
@@ -307,15 +247,15 @@ class Controller
                             $image->setBlogPostId($actualImage['blogPostId']);
                             $this->executeUpdateImage($image);
                             $this->deleteImageFile($actualImage['serverFile']);
-                            $this->user->setMessage('Le blogpost a bien été modifié');
-                            $this->redirect('/blogPost/'. $blogPost->id() . '/p1');
+                            $this->app->user()->setMessage('Le blogpost a bien été modifié');
+                            $this->app->serverResponse()->redirect('/blogPost/'. $blogPost->id() . '/p1.html');
                         }
                         else
                         {
-                            $image->setBlogPostId($this->getData('id'));
+                            $image->setBlogPostId($blogPostId);
                             $this->executeInsertImage($image);
-                            $this->user->setMessage('Le blogpost a bien été modifié');
-                            $this->redirect('/blogPost/'. $blogPost->id() . '/p1');
+                            $this->app->user()->setMessage('Le blogpost a bien été modifié');
+                            $this->app->serverResponse()->redirect('/blogPost/'. $blogPost->id() . '/p1.html');
                         }
                     }
                     else
@@ -326,8 +266,8 @@ class Controller
                 else
                 {
                     $blogPostManager->update($blogPost);
-                    $this->user->setMessage('Le blogpost a bien été modifié');
-                    $this->redirect('/blogPost/'. $blogPost->id() . '/p1');
+                    $this->app->user()->setMessage('Le blogpost a bien été modifié');
+                    $this->app->serverResponse()->redirect('/blogPost/'. $blogPost->id() . '/p1.html');
                 }
             }
             else
@@ -349,33 +289,37 @@ class Controller
         $imageManager->update($image);
     }
 
-    public function executeUpdateComment()
+    public function executeUpdateComment(UserRequest $userRequest)
     {
         $commentManager = new commentManager;
-        $comment = $commentManager->getUnique($this->getData('id'));
+        $comment = $commentManager->getUnique($userRequest->getData('id'));
+
+        if (empty ($comment))
+        {
+            $this->app->serverResponse()->redirect404();
+        }
+
         $blogPostId = $comment->blogPost();
 
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($blogPostId);
 
-        $this->page->addVars(['comment' => $comment, 'blogPost' => $blogPost]);
+        $this->page->addVars(['comment' => $comment, 'blogPost' => $blogPost, 'user' => $this->app->user()]);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        if ($userRequest->requestMethod() === 'POST')
         {
             $comment = new Comment([
-                'id' => $this->getData('id'),
+                'id' => $userRequest->getData('id'),
                 'blogPost' => $blogPostId,
-                'auteur' => $this->postData('auteur'),
-                'contenu' => $this->postData('contenu')
+                'auteur' => $userRequest->postData('auteur'),
+                'contenu' => $userRequest->postData('contenu')
             ]);
 
             if ($comment->isValid())
             {
                 $commentManager->update($comment);
-
-                $this->user->setMessage('Le commentaire a bien été modifié');
-
-                $this->redirect('/blogPost/'. $blogPostId . '/p1');
+                $this->app->user()->setMessage('Le commentaire a bien été modifié');
+                $this->app->serverResponse()->redirect('/blogPost/'. $blogPostId . '/p1.html');
             }
         }
         else
@@ -388,31 +332,32 @@ class Controller
                     EXECUTE DELETE
      ***********************************************/
 
-    public function executeDeleteBlogPost()
+    public function executeDeleteBlogPost(UserRequest $userRequest)
     {
+        $blogPostId = $userRequest->getData('id');
         $imageManager = new imageManager;
-        $image = $imageManager->getUnique($this->getData('id'));
+        $image = $imageManager->getUnique($blogPostId);
+
         if ($image != null)
         {
             $this->deleteImageFile($image['serverFile']);
         }
 
         $blogPostManager = new BlogPostManager();
-        $blogPostManager->delete($this->getData('id'));
+        $blogPostManager->delete($blogPostId);
 
-        $this->user->setMessage('Le blogpost a bien été supprimé');
-
-        $this->redirect('/index/p1/cat/all');
+        $this->app->user()->setMessage('Le blogpost a bien été supprimé');
+        $this->app->serverResponse()->redirect('/index/p1/cat/all.html');
     }
 
-    public function executeDeleteComment()
+    public function executeDeleteComment(UserRequest $userRequest)
     {
         $commentManager = new CommentManager;
-        $blogPost = $commentManager->delete($this->getData('id'));
+        $blogPost = $commentManager->delete($userRequest->getData('id'));
 
-        $this->user->setMessage('Le commentaire a bien été supprimé');
+        $this->app->user()->setMessage('Le commentaire a bien été supprimé');
 
-        $this->redirect('/blogPost/'. $blogPost . '/p1');
+        $this->app->serverResponse()->redirect('/blogPost/'. $blogPost . '/p1.html');
     }
 
     public function deleteImageFile ($serverFileImage)
@@ -431,84 +376,27 @@ class Controller
         {
             $erreurString .= ' - ' .$erreur . '<br />';
         }
-        $this->user->setMessage('Oops !<br />' . $erreurString);
+        $this->app->user()->setMessage('Oops !<br />' . $erreurString);
     }
+
 
     /***********************************************
-                     REDIRECTION
+                        SETTERS
      ***********************************************/
 
-    public function redirect($redirection)
+    public function setActionView($actionView)
     {
-        $_SESSION['trajet'] = 'redirect';
-        header('Location: '. $redirection);
-    }
-
-    public function redirect404()
-    {
-        $this->page->setFileView(__DIR__. '/../../Errors/404.html');
-        $this->send();
-    }
-
-    public function redirectErrorDB()
-    {
-        $this->page->setFileView(__DIR__. '/../../Errors/errorDB.html');
-        $this->send();
-    }
-
-    /***********************************************
-                        SEND
-     ***********************************************/
-
-    public function send()
-    {
-        $config = $this->config();
-        $user = $this->user();
-
-        extract($this->page->vars());
-
-        ob_start();
-        require $this->page->fileView();
-        $content = ob_get_clean();
-
-        ob_start();
-        require __DIR__.'/../../Templates/layout.php';
-        exit(ob_get_clean());
-    }
-
-    /***********************************************
-                  RETURN $_POST/$_GET
-     ***********************************************/
-
-    public function postData($key)
-    {
-        return isset($_POST[$key])? $_POST[$key] : null;
-    }
-
-    public function getData($key)
-    {
-        return isset($_GET[$key])? $_GET[$key] : null;
-    }
-
-    /***********************************************
-                       SETTERS
-     ***********************************************/
-
-    public function addRoute(Route $route)
-    {
-        if (!in_array($route, $this->routes))
+        if (!is_string($actionView) || empty($actionView))
         {
-            $this->routes[] = $route;
+            throw new \InvalidArgumentException('La vue doit être une chaine de caractères valide');
         }
-    }
 
-    public function setRoute(Route $route)
-    {
-        $this->route = $route;
+        $this->actionView = $actionView;
+        $this->page->setFileView(__DIR__ . '/../../Views/'. $this->actionView . '.php');
     }
 
     /***********************************************
-                      GETTERS
+                    GETTERS
      ***********************************************/
 
     public function page()
@@ -516,24 +404,9 @@ class Controller
         return $this->page;
     }
 
-    public function route()
-    {
-        return $this->route;
-    }
 
-    public function visitorRequest()
+    public function ActionView()
     {
-        return $this->visitorRequest;
+        return $this->actionView;
     }
-
-    public function user()
-    {
-        return $this->user;
-    }
-
-    public function config()
-    {
-        return $this->config;
-    }
-
 }

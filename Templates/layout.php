@@ -52,10 +52,10 @@
                     <a href="#page-top"></a>
                 </li>
                 <li>
-                    <a href="/index/p1/cat/all">BlogPost</a>
+                    <a href="/index/p1/cat/all.html">BlogPost</a>
                 </li>
                 <li>
-                    <a href="/blogPost/insert">Ecrire un BlogPost</a>
+                    <a href="/blogPost/insert.html">Ecrire un BlogPost</a>
                 </li>
                 <li class="page-scroll">
                     <a href="/#about">A propos</a>

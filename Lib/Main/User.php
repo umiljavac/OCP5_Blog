@@ -7,7 +7,7 @@
  */
 
 /**
- * Class User is used to create and return session variables and set cookies if needed.
+ * Class User is used to create and return session variables.
  */
 
 namespace Main;
@@ -41,10 +41,4 @@ class User
         $message = $_SESSION['message'];
         return $message;
     }
-
-    public function setCookie($name, $value ='', $expire = 0, $path = null, $domain = null, $secure = false, $httpOnly = true)
-    {
-        setcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
-    }
-
 }

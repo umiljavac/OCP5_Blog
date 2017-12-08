@@ -17,14 +17,14 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="/index/p1/cat/actu">Actu</a></li>
-                        <li><a href="/index/p1/cat/litterature">Littérature</a></li>
-                        <li><a href="/index/p1/cat/musique">Musique</a></li>
-                        <li><a href="/index/p1/cat/programmation">Programmation</a></li>
-                        <li><a href="/index/p1/cat/science">Science</a></li>
-                        <li><a href="/index/p1/cat/societe">Société</a></li>
+                        <li><a href="/index/p1/cat/actu.html">Actu</a></li>
+                        <li><a href="/index/p1/cat/litterature.html">Littérature</a></li>
+                        <li><a href="/index/p1/cat/musique.html">Musique</a></li>
+                        <li><a href="/index/p1/cat/programmation.html">Programmation</a></li>
+                        <li><a href="/index/p1/cat/science.html">Science</a></li>
+                        <li><a href="/index/p1/cat/societe.html">Société</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="/index/p1/cat/all">Toutes..</a></li>
+                        <li><a href="/index/p1/cat/all.html">Toutes..</a></li>
                     </ul>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     ?>
                 </div>
                 <div class="col-lg-8 col-md-6">
-                    <h3 class="text-center h3BlogPostList"><a class="titreBlogPostList" href="/blogPost/<?=$blogPost->id()?>/p1"><?= htmlspecialchars($blogPost->titre()) ?></a></h3>
+                    <h3 class="text-center h3BlogPostList"><a class="titreBlogPostList" href="/blogPost/<?=$blogPost->id()?>/p1.html"><?= htmlspecialchars($blogPost->titre()) ?></a></h3>
                     <p class="chapoBlogPostList"><?= nl2br(htmlspecialchars($blogPost->chapo())) ?></p>
                 </div>
                 <div class="col-lg-2 col-md-3 bp-info">
@@ -68,9 +68,9 @@
         <div class="row pagination">
         <?php
         $numeroPage = 1;
-        for ($i = 1; $i <= $nbBlogPost; $i += $config->getConfig('blogPosts')) {
+        for ($i = 1; $i <= $nbBlogPost; $i += $blogPostsPerPage) {
         ?>
-            <a class="btn btn-info" href="/index/p<?= $numeroPage ?>/cat/<?= $categorie ?>"><?= $numeroPage ?></a>
+            <a class="btn btn-info" href="/index/p<?= $numeroPage ?>/cat/<?= $categorie ?>.html"><?= $numeroPage ?></a>
         <?php $numeroPage++;
         }
         ?>

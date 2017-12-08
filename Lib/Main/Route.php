@@ -44,7 +44,7 @@ class Route
         }
     }
 
-    public function hasVar()
+    public function hasVars()
     {
         return !empty($this->varsNames());
     }
