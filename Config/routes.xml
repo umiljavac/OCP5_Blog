@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <routes>
     <route url="/" view="accueil"></route>
-    <route url="/index/p([0-9]+)/cat/([a-z]+)" view="index" vars="page,cat"></route>
-    <route url="/blogPost/([0-9]+)/p([0-9]+)" view="showBlogPost" vars="id,page"></route>
-    <route url="/blogPost/insert" view="insertBlogPost"></route>
-    <route url="/blogPost/update/([0-9]+)" view="updateBlogPost" vars="id"></route>
-    <route url="/blogPost/delete/([0-9]+)" view="deleteBlogPost" vars="id"></route>
-    <route url="/comment/insert/([0-9]+)" view="insertComment" vars="blogPost"></route>
-    <route url="/comment/update/([0-9]+)" view="updateComment" vars="id"></route>
-    <route url="/comment/delete/([0-9]+)" view="deleteComment" vars="id"></route>
+    <route url="/index/p([0-9]+)/cat/([a-z]+)\.html" view="index" vars="page,cat"></route>
+    <route url="/blogPost/([0-9]+)/p([0-9]+)\.html" view="showBlogPost" vars="id,page"></route>
+    <route url="/blogPost/insert\.html" view="insertBlogPost"></route>
+    <route url="/blogPost/update/([0-9]+)\.html" view="updateBlogPost" vars="id"></route>
+    <route url="/blogPost/delete/([0-9]+)\.html" view="deleteBlogPost" vars="id"></route>
+    <route url="/comment/insert/([0-9]+)\.html" view="insertComment" vars="blogPostId"></route>
+    <route url="/comment/update/([0-9]+)\.html" view="updateComment" vars="id"></route>
+    <route url="/comment/delete/([0-9]+)\.html" view="deleteComment" vars="id"></route>
 </routes>

@@ -35,8 +35,8 @@
             <p class="contenu">Article rédigé par <span class="auteurBlogPost"><?= htmlspecialchars($blogPost['auteur'])?></span></p>
         </div>
         <div class="action text-right">
-            <a type="button" class="btn modifier btn-sm" href="/blogPost/update/<?= $blogPost['id']?>">Modifier</a>
-            <a type="button" class="btn supprimer btn-sm" href="/blogPost/delete/<?= $blogPost['id']?>">Supprimer</a>
+            <a type="button" class="btn modifier btn-sm" href="/blogPost/update/<?= $blogPost['id']?>.html">Modifier</a>
+            <a type="button" class="btn supprimer btn-sm" href="/blogPost/delete/<?= $blogPost['id']?>.html">Supprimer</a>
         </div>
     </div>
 
@@ -45,7 +45,7 @@
     <div class="container">
         <div class="commentaires">
             <div class="titreCommentaires">
-                <p class="text-center"><a type="button" class="btn envoyer btn-md" href="/../comment/insert/<?= $blogPost['id']?>">Ajouter un commentaire</a></p>
+                <p class="text-center"><a type="button" class="btn envoyer btn-md" href="/../comment/insert/<?= $blogPost['id']?>.html">Ajouter un commentaire</a></p>
             </div>
             <?php
             foreach ($commentList as $comment)
@@ -57,8 +57,8 @@
 
                     <p class="contenuCommentaire"><?= nl2br(htmlspecialchars($comment->contenu()))?></p>
                     <div class="action-com text-right">
-                            <a type="button" class="btn modifier btn-sm" href="/../comment/update/<?=$comment['id']?>">Modifier</a>
-                            <a type="button" class="btn supprimer btn-sm" href="/../comment/delete/<?=$comment['id']?>">Supprimer</a>
+                            <a type="button" class="btn modifier btn-sm" href="/../comment/update/<?=$comment['id']?>.html">Modifier</a>
+                            <a type="button" class="btn supprimer btn-sm" href="/../comment/delete/<?=$comment['id']?>.html">Supprimer</a>
                     </div>
                 </div>
                 <?php
@@ -68,9 +68,9 @@
                 <?php
                 $numeroPage = 1;
 
-                for ($i = 1; $i <= $nbCommentaires; $i += $config->getConfig('comments')) {
+                for ($i = 1; $i <= $nbCommentaires; $i += $commentsPerPage) {
                     ?>
-                    <a class="btn btn-info" href="/blogPost/<?= $blogPost['id'] ?>/p<?= $numeroPage ?>"><?= $numeroPage?></a>
+                    <a class="btn btn-info" href="/blogPost/<?= $blogPost['id'] ?>/p<?= $numeroPage ?>.html"><?= $numeroPage?></a>
                     <?php $numeroPage++;
                 }
                 ?>

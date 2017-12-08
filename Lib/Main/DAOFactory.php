@@ -41,7 +41,7 @@ class DAOFactory
 
             return $db;
         }
-        catch (\Exception $e)
+        catch (\PDOException $e)
         {
             $errorDB = fopen(__DIR__ .'/../../Errors/errorDB.txt', 'a+');
             fputs($errorDB, date(DATE_RSS) . ' : ' . $e->getMessage() . PHP_EOL);
