@@ -19,12 +19,11 @@ class Config
 {
     protected $vars = [];
 
-    public function __construct()
+    public function __construct($fileLoaded, $elementTagName)
     {
         $xml = new \DOMDocument();
-        $xml->load(__DIR__.'/../../Config/preferences.xml');
-        $elements = $xml->getElementsByTagName('pagination');
-
+        $xml->load($fileLoaded);
+        $elements = $xml->getElementsByTagName($elementTagName);
         foreach ($elements as $element)
         {
             $this->vars[$element->getAttribute('var')] = $element->getAttribute('value');
