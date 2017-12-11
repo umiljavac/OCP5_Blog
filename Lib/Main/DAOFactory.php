@@ -15,28 +15,20 @@ namespace Main;
 
 class DAOFactory
 {
-    private $connectionVars = [];
+    private $config;
 
     public function __construct()
     {
-        $xml = new \DOMDocument();
-        $xml->load(__DIR__ . '/../../Config/dbConnection.xml');
-
-        $elements = $xml->getElementsByTagName('connection');
-
-        foreach ( $elements as $element)
-        {
-            $this->connectionVars[$element->getAttribute('var')] = $element->getAttribute('value');
-        }
+        $this->config = new Config(__DIR__ . '/../../Config/dbConnection.xml', 'connection');
     }
 
     public function getMysqlConnectionWithPDO()
     {
         try {
-            $db = new \PDO('mysql:host=' . $this->connectionVars['host'] . ';
-                                     dbname=' . $this->connectionVars['dbname'] ,
-                                    $this->connectionVars['username'],
-                                    $this->connectionVars['password'] );
+            $db = new \PDO('mysql:host=' . $this->config->getConfig('host') . ';
+                                     dbname=' . $this->config->getConfig('dbname') ,
+                                    $this->config->getConfig('username'),
+                                    $this->config->getConfig('password'));
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
             return $db;

@@ -6,8 +6,11 @@
  * Time: 16:03
  */
 
-namespace Main;
+/**
+ * This class allow to access the variables and request method contained in the user request.
+ */
 
+namespace Main;
 
 class UserRequest
 {
