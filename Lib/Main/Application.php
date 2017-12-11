@@ -6,6 +6,10 @@
  * Time: 17:08
  */
 
+/**
+ * Class Application
+ */
+
 namespace Main;
 
 

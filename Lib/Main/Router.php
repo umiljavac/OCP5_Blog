@@ -6,6 +6,10 @@
  * Time: 17:21
  */
 
+/**
+ * Router class stock all the routes available and return with the getRoute() method the one which match with the user request.
+ */
+
 namespace Main;
 
 

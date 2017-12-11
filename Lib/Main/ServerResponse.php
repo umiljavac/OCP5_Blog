@@ -6,6 +6,10 @@
  * Time: 16:11
  */
 
+/**
+ * This class return the page with the view and all the variables needed to allow the display of user request.
+ */
+
 namespace Main;
 
 

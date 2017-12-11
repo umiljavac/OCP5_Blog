@@ -6,6 +6,9 @@
  * Time: 10:13
  */
 
+/**
+ * Controller make the connections between the model and the view.
+ */
 
 namespace Main;
 
