@@ -38,7 +38,8 @@
                 <p class="reduce">Des neuf projets à réaliser durant mon parcours, ce blog est le cinquième et représente une mise en pratique concrète de mes connaissances actuelles dans le développement web. Il nous est demandé de créer un blog sans utiliser de librairies/frameworks externes. Chaque visiteur à la possibilité, sans avoir à s'identifier, de créer, modifier, ou supprimer du contenu. Ici, tout est donc accessible et ouvert : Entrez Libres !</p>
             </div>
             <div class="col-lg-8 col-lg-offset-2 text-center">
-                <a href="/img/ulrich_miljavac_cv.pdf" class="btn btn-lg btn-outline">
+              <!--  <a href="/img/ulrich_miljavac_cv.pdf" class="btn btn-lg btn-outline"> -->
+                <a href="<?= $cv ?>" class="btn btn-lg btn-outline">
                     <i class="fa fa-download"></i> Télécharger mon CV
                 </a>
             </div>
@@ -103,4 +104,3 @@
         </div>
     </div>
 </section>
-

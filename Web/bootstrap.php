@@ -17,6 +17,6 @@ $modelLoader->register();
 $entityLoader = new SplClassLoader('Entity', __DIR__.'/../Lib/Vendors');
 $entityLoader->register();
 
-$controller = new \Main\Application();
-$controller->run();
+$app = new \Main\Application();
+$app->run();
 

@@ -25,7 +25,7 @@ class Application
         $this->userRequest = new UserRequest();
         $this->serverResponse = new ServerResponse();
         $this->user = new User();
-        $this->config = new Config(__DIR__.'/../../Config/preferences.xml', 'pagination');
+        $this->config = new Config();
     }
 
     public function run()

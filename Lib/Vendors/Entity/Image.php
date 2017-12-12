@@ -139,5 +139,4 @@ class Image extends Entity
     {
         return $this->size;
     }
-
 }

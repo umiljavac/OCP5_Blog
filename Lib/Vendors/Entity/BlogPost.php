@@ -133,5 +133,4 @@ class BlogPost extends Entity
     {
         return $this->dateModif;
     }
-
 }

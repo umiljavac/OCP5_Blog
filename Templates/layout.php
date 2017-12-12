@@ -98,7 +98,7 @@
                 </div>
                 <div class="footer-col col-md-4">
                     <h4>Mon CV</h4>
-                    <p>Cliquer sur le lien pour télécharger mon CV au format PDF <a href="/img/ulrich_miljavac_cv.pdf">Ulrich Miljavac</a>.</p>
+                    <p>Cliquer sur le lien pour télécharger mon CV au format PDF <a href="<?= $cv ?>">Ulrich Miljavac</a>.</p>
                 </div>
             </div>
         </div>
@@ -140,4 +140,3 @@
 </body>
 
 </html>
-
