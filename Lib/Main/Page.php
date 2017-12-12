@@ -58,8 +58,8 @@ class Page
             {
                 throw new \InvalidArgumentException('le nom de la variable doit être une chaîne de caractère non nulle');
             }
+            $this->vars[$var] = $value;
         }
-        $this->vars = $vars;
     }
 
     /***********************************************
