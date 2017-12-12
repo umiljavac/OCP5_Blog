@@ -54,9 +54,7 @@ class Controller
 
     public function executeAccueil()
     {
-        $this->app->config()->parseFile(__DIR__.'/../../Config/homeLinks.xml','link');
-        $cv = $this->app->config()->getconfig('cv');
-        $this->page->addVars(['cv' => $cv]);
+
     }
 
     public function executeIndex(UserRequest $userRequest)
@@ -74,7 +72,7 @@ class Controller
         $imageManager = new ImageManager;
         $imageList = $imageManager->getList($categorie, $blogPostsPerPage, $userRequest->getData('page'));
 
-        $this->page->addVars(['blogPostList' => $blogPostList, 'nbBlogPost' => $nbBlogPost, 'categorie' => $categorie, 'imageList' => $imageList, 'user' => $this->app->user(), 'blogPostsPerPage' => $blogPostsPerPage]);
+        $this->page->addVars(['blogPostList' => $blogPostList, 'nbBlogPost' => $nbBlogPost, 'categorie' => $categorie, 'imageList' => $imageList, 'blogPostsPerPage' => $blogPostsPerPage]);
     }
 
     public function executeShowBlogPost(UserRequest $userRequest)
@@ -100,7 +98,7 @@ class Controller
         $commentList = $commentManager->getList($blogPostId, $commentsPerPage, $targetPage);
         $nbCommentaires = $commentManager->count($blogPostId);
 
-        $this->page->addVars(['blogPost' => $blogPost, 'image' => $image, 'commentList' => $commentList, 'nbCommentaires' => $nbCommentaires, 'user' => $this->app->user(), 'commentsPerPage' => $commentsPerPage]);
+        $this->page->addVars(['blogPost' => $blogPost, 'image' => $image, 'commentList' => $commentList, 'nbCommentaires' => $nbCommentaires, 'commentsPerPage' => $commentsPerPage]);
     }
 
     /***********************************************
@@ -109,7 +107,7 @@ class Controller
 
     public function executeInsertBlogPost(UserRequest $userRequest)
     {
-        $this->page->addVars(['tailleMax' => Image::MAX_SIZE, 'user' => $this->app->user()]);
+        $this->page->addVars(['tailleMax' => Image::MAX_SIZE ]);
 
         if ($userRequest->requestMethod() === 'POST')
         {
@@ -171,7 +169,7 @@ class Controller
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($blogPostId);
 
-        $this->page->addVars(['blogPost' => $blogPost, 'user' => $this->app->user()]);
+        $this->page->addVars(['blogPost' => $blogPost]);
 
         if ($userRequest->requestMethod() === 'POST')
         {
@@ -228,7 +226,7 @@ class Controller
         $imageManager = new ImageManager;
         $actualImage = $imageManager->getUnique($blogPostId);
 
-        $this->page->addVars(['tailleMax' => Image::MAX_SIZE, 'blogPost' => $blogPost, 'actualImage' => $actualImage, 'user' => $this->app->user()]);
+        $this->page->addVars(['tailleMax' => Image::MAX_SIZE, 'blogPost' => $blogPost, 'actualImage' => $actualImage ]);
 
         if ($userRequest->requestMethod() === 'POST')
         {
@@ -313,7 +311,7 @@ class Controller
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($blogPostId);
 
-        $this->page->addVars(['comment' => $comment, 'blogPost' => $blogPost, 'user' => $this->app->user()]);
+        $this->page->addVars(['comment' => $comment, 'blogPost' => $blogPost]);
 
         if ($userRequest->requestMethod() === 'POST')
         {
@@ -347,7 +345,7 @@ class Controller
         $imageManager = new imageManager;
         $image = $imageManager->getUnique($blogPostId);
 
-        if ($image != null)
+        if ($image !== null)
         {
             $this->deleteImageFile($image['serverFile']);
         }

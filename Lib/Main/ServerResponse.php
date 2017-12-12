@@ -57,4 +57,9 @@ class ServerResponse
     {
         setcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
     }
+
+    public function page()
+    {
+        return $this->page;
+    }
 }

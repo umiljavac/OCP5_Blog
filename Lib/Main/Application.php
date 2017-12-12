@@ -30,11 +30,17 @@ class Application
 
     public function run()
     {
-       $controller = $this->getController();
-       $controller->execute();
+        $controller = $this->getController();
+        $controller->execute();
+        $this->serverResponse->setPage($controller->page());
 
-       $this->serverResponse->setPage($controller->page());
-       $this->serverResponse->send();
+        $this->config->parseFile(__DIR__.'/../../Config/homeLinks.xml','link');
+        $cv = $this->config->getconfig('cv');
+        $this->config->parseFile(__DIR__.'/../../Config/homeLinks.xml','link');
+        $favicon = $this->config->getconfig('favicon');
+
+        $this->serverResponse->page()->addVars(['cv' => $cv, 'favicon' => $favicon, 'user' => $this->user]);
+        $this->serverResponse->send();
     }
 
     public function getController()
