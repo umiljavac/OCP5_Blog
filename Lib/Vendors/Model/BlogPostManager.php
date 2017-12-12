@@ -121,5 +121,4 @@ class BlogPostManager extends Manager
     {
         return $this->db->query('SELECT id FROM BlogPost WHERE id = LAST_INSERT_ID()')->fetchColumn();
     }
-
 }

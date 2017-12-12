@@ -15,11 +15,12 @@ namespace Main;
 
 class DAOFactory
 {
-    private $config;
+    protected $config;
 
     public function __construct()
     {
-        $this->config = new Config(__DIR__ . '/../../Config/dbConnection.xml', 'connection');
+        $this->config = new Config();
+        $this->config->parseFile(__DIR__ . '/../../Config/dbConnection.xml','connection');
     }
 
     public function getMysqlConnectionWithPDO()

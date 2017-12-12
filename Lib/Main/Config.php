@@ -18,7 +18,7 @@ class Config
 {
     protected $vars = [];
 
-    public function __construct($fileLoaded, $elementTagName)
+    public function parseFile($fileLoaded, $elementTagName)
     {
         $xml = new \DOMDocument();
         $xml->load($fileLoaded);

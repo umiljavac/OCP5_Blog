@@ -3,3 +3,4 @@
     <pagination var="blogPosts" value="7"></pagination>
     <pagination var="comments" value="4"></pagination>
 </preferences>
+

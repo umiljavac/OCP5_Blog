@@ -97,5 +97,4 @@ class Route
     {
         return $this->vars;
     }
-
 }

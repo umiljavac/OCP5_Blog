@@ -39,7 +39,7 @@ class Controller
 
     public function execute()
     {
-        $actionRequest = 'execute'.ucfirst($this->actionView());
+        $actionRequest = 'execute'.ucfirst($this->actionView);
         if (!is_callable([$this, $actionRequest]))
         {
             throw new \RuntimeException('L\'action demandée est impossible');
@@ -54,13 +54,18 @@ class Controller
 
     public function executeAccueil()
     {
+        $this->app->config()->parseFile(__DIR__.'/../../Config/homeLinks.xml','link');
+        $cv = $this->app->config()->getconfig('cv');
+        $this->page->addVars(['cv' => $cv]);
     }
 
     public function executeIndex(UserRequest $userRequest)
     {
         $categorie = $userRequest->getData('cat');
         $targetPage = $userRequest->getData('page');
-        $blogPostsPerPage = $this->app->config()->getConfig('blogPosts');
+
+        $this->app->config()->parseFile(__DIR__.'/../../Config/preferences.xml','pagination');
+        $blogPostsPerPage = $this->app->config()->getconfig('blogPosts');
 
         $blogPostManager = new BlogPostManager;
         $blogPostList = $blogPostManager->getList($categorie, $blogPostsPerPage, $targetPage);
@@ -76,8 +81,9 @@ class Controller
     {
         $blogPostId = $userRequest->getData('id');
         $targetPage = $userRequest->getData('page');
-        $commentsPerPage = $this->app->config()->getConfig('comments');
 
+        $this->app->config()->parseFile(__DIR__.'/../../Config/preferences.xml','pagination');
+        $commentsPerPage = $this->app->config()->getconfig('comments');
 
         $blogPostManager = new BlogPostManager;
         $blogPost = $blogPostManager->getUnique($blogPostId);
@@ -408,7 +414,7 @@ class Controller
     }
 
 
-    public function ActionView()
+    public function actionView()
     {
         return $this->actionView;
     }
