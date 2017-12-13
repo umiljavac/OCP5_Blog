@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <links>
     <link var="cv" value="/img/ulrich_miljavac_cv.pdf"></link>
-    <link var="favicon" value="/img/myFavicon.png"></link>
+    <link var="favicon" value="favicon.ico"></link>
 </links>

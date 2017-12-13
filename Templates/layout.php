@@ -11,7 +11,16 @@
 
     <title>Entrez Libres</title>
 
-    <link rel="icon" type="image/png" href="<?= $favicon ?>">
+
+
+    <link rel="apple-touch-icon" sizes="144x144" href="../Web/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Web/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Web/favicon-16x16.png">
+    <link rel="manifest" href="../Web/manifest.json">
+    <link rel="mask-icon" href="../Web/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+
+
 
     <!-- Bootstrap Core CSS -->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
