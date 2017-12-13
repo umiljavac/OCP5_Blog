@@ -18,10 +18,8 @@ $entityLoader = new SplClassLoader('Entity', __DIR__.'/../Lib/Vendors');
 $entityLoader->register();
 
 $app = new \Main\Application();
-//$app->run();
 $page = $app->run();
 
-//print_r($page);
 extract($page->vars());
 ob_start();
 require $page->fileView();

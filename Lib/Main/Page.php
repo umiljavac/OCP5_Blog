@@ -19,23 +19,6 @@ class Page
 {
     protected $fileView;
     protected $vars = [];
-/*
-    public function getGeneratedPage()
-    {
-        if (!file_exists($this->fileView))
-        {
-            throw new \RuntimeException('La vue spécifiée n\'existe pas');
-        }
-        extract($this->vars());
-
-        ob_start();
-        require $this->fileView;
-        $content = ob_get_clean();
-
-        ob_start();
-        require __DIR__.'/../../Templates/layout.php';
-        return ob_get_clean();
-    } */
 
     public function getGeneratedPage()
     {

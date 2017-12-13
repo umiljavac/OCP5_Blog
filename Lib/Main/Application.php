@@ -30,19 +30,8 @@ class Application
 
     public function run()
     {
-      /*  try
+        if ( null !== ($controller = $this->getController()))
         {
-            $controller = $this->getController();
-            //  $controller->execute();
-          //  $this->serverResponse->setPage($controller->page());
-        }
-        catch (\Exception $e)
-        {
-            $errorPage = fopen(__DIR__ .'/../../Errors/404.txt', 'a+');
-            fputs($errorPage, date(DATE_RSS) . ' : ' . $e->getMessage() . PHP_EOL);
-            fclose($errorPage);
-        } */
-        if( null !== ($controller = $this->getController())) {
             try
             {
                 $controller->execute();
@@ -55,10 +44,6 @@ class Application
                 fclose($errorPage);
             }
         }
-        /*
-        $controller = $this->getController();
-        $controller->execute();
-        $this->serverResponse->setPage($controller->page()); */
 
         $this->config->parseFile(__DIR__.'/../../Config/homeLinks.xml','link');
         $cv = $this->config->getconfig('cv');
@@ -66,8 +51,7 @@ class Application
         $favicon = $this->config->getconfig('favicon');
 
         $this->serverResponse->page()->addVars(['cv' => $cv, 'favicon' => $favicon, 'user' => $this->user]);
-     //  $this->serverResponse->send();
-       return $this->serverResponse->send();
+        return $this->serverResponse->send();
     }
 
     public function getController()
@@ -110,14 +94,9 @@ class Application
                 {
                     $this->serverResponse->redirect404();
                 }
-              /*  $errorPage = fopen(__DIR__ .'/../../Errors/404.txt', 'a+');
-                fputs($errorPage, date(DATE_RSS) . ' : ' . $e->getMessage() . PHP_EOL);
-                fclose($errorPage); */
             }
         }
 
-      //  $_GET = array_merge($_GET, $matchedRoute->vars());
-      //  return new Controller($matchedRoute->view(), $this);
         return null;
     }
 
