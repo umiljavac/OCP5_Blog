@@ -18,5 +18,14 @@ $entityLoader = new SplClassLoader('Entity', __DIR__.'/../Lib/Vendors');
 $entityLoader->register();
 
 $app = new \Main\Application();
-$app->run();
+//$app->run();
+$page = $app->run();
 
+//print_r($page);
+extract($page->vars());
+ob_start();
+require $page->fileView();
+$content = ob_get_clean();
+ob_start();
+require __DIR__ . '/../Templates/layout.php';
+ob_end_flush();

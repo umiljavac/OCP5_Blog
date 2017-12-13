@@ -19,7 +19,7 @@ class Page
 {
     protected $fileView;
     protected $vars = [];
-
+/*
     public function getGeneratedPage()
     {
         if (!file_exists($this->fileView))
@@ -35,6 +35,11 @@ class Page
         ob_start();
         require __DIR__.'/../../Templates/layout.php';
         return ob_get_clean();
+    } */
+
+    public function getGeneratedPage()
+    {
+
     }
 
     /***********************************************

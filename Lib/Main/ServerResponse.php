@@ -17,9 +17,15 @@ class ServerResponse
 {
     protected $page;
 
-    public function send()
+  /*  public function send()
     {
         exit($this->page->getGeneratedPage());
+    } */
+
+
+    public function send()
+    {
+        return $this->page;
     }
 
     public function addHeader($header)
@@ -38,14 +44,16 @@ class ServerResponse
         $this->page = new Page();
         $this->page->setFileView(__DIR__. '/../../Errors/404.html');
         $this->addHeader('HTTP/1.O NotFound');
-        $this->send();
+       // throw new \Exception('la page demandée n\'existe pas');
+       // header('Location: /Errors/404.html');
+        //  $this->send();
     }
 
     public function redirectErrorDB()
     {
         $this->page = new Page();
         $this->page->setFileView(__DIR__. '/../../Errors/errorDB.html');
-        $this->send();
+       // $this->send();
     }
 
     public function setPage(Page $page)

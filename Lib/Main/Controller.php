@@ -89,6 +89,7 @@ class Controller
         if (empty($blogPost))
         {
             $this->app->serverResponse()->redirect404();
+            throw new \RuntimeException('le blogPost n\'existe pas');
         }
 
         $imageManager = new ImageManager;
