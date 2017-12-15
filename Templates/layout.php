@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>Entrez Libres</title>
-    
+
     <link rel="icon" type="image/png" href="<?= $favicon ?>">
 
     <!-- Bootstrap Core CSS -->

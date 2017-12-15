@@ -19,7 +19,7 @@ class ServerResponse
 
     public function send()
     {
-        return $this->page;
+        $this->page->getGeneratedPage();
     }
 
     public function addHeader($header)
@@ -44,6 +44,7 @@ class ServerResponse
     {
         $this->page = new Page();
         $this->page->setFileView(__DIR__. '/../../Errors/errorDB.html');
+        $this->addHeader('HTTP/1.O NotFound');
     }
 
     public function setPage(Page $page)

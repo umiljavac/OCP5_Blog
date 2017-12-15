@@ -40,6 +40,7 @@ abstract class Entity implements \ArrayAccess
         }
     }
 
+
     public function isNew()
     {
         return empty($this->id);

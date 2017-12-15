@@ -7,7 +7,10 @@
  */
 
 /**
- * Class Application
+ * Class Application launch a Router Class that will be able to return the route corresponding to the user request.
+ * That means that after finding the proper route, a Controller is instantiated.
+ * This one will return all the variables needed to complete the view by interacting with model entities.
+ * Then the Application send the requested Page to the user using a ServerResponse class.
  */
 
 namespace Main;
@@ -84,8 +87,7 @@ class Application
         {
             if ($e->getCode() === Router::NO_ROUTE)
             {
-
-                if ($_SESSION['error'] === 'errorDB')
+                if (isset($_SESSION['error']) && $_SESSION['error'] === 'errorDB')
                 {
                     $_SESSION['error'] = '';
                     $this->serverResponse->redirectErrorDB();

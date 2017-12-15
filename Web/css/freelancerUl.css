@@ -103,7 +103,7 @@ h6 {
     font-family:"Gruppo", cursive ;
 }
 .dropdown-menu > li > a:hover {
-    background-color: orange;
+    background-color: cadetblue;
 }
 
 /********************************************
@@ -155,7 +155,7 @@ section.success {
 #contact {
     background-color: white;
     color: darkcyan;
-    margin-bottom: -100px;
+    margin-bottom: -80px;
 }
 .about {
     color: #101010;
@@ -186,6 +186,7 @@ section.success {
 .pagination {
     display: flex;
     justify-content: left;
+    margin-left: 15px;
 }
 
 /*******************************************
@@ -263,6 +264,7 @@ footer .footer-col {
 footer .footer-below {
     padding: 25px 0;
     background: #9d9d9d;
+    margin-bottom: -50px;
 }
 
 /***********************************************
@@ -313,14 +315,14 @@ footer .footer-below {
 }
 .btn-default {
     margin-left: 5px !important;
-    background-color: #e6e6e6;
+    background-color: cadetblue;
     border: none;
-    color: black;
+    color: wheat;
     padding-top: 3px;
     border-radius: 5px;
     border: 1px solid black;
     font-family: "Gruppo", cursive;
-    opacity: 0.95;
+    opacity: 1;
 }
 
 .btn-default:hover {
@@ -335,6 +337,7 @@ footer .footer-below {
 .fondIndex {
     background: url("../img/fond-index-blur6.jpg");
     background-position: top center;
+    background-attachment: fixed;
 }
 .dateBlogPostList {
     font-size: 1em;
@@ -512,6 +515,15 @@ footer .footer-below {
 }
 .erreur {
     padding: 60px 0;
+    background: url("../img/baby.jpg");
+    background-position: top center;
+}
+.erreurMessage {
+    background-color: darkgrey;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    color: black;
 }
 
 /*******************************************
@@ -637,10 +649,13 @@ footer .footer-below {
     }
      #content {
         margin-bottom: -70px !important;
-    }
+     }
      .asterisque {
          margin-top: 15px;
      }
+    #contact {
+        margin-bottom: -10px !important;
+    }
 }
 
 /******************************************
@@ -649,3 +664,5 @@ footer .footer-below {
 .asterisque {
     font-size: 0.8em;
 }
+
+

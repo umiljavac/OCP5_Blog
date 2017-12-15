@@ -35,8 +35,9 @@ class CommentManager extends Manager
     {
         $req = $this->db->prepare('SELECT id, blogPost, auteur, contenu FROM Comment WHERE id = :id');
         $req->bindValue(':id', (int) $id, \PDO::PARAM_INT);
-        $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Comment');
         $req->execute();
+
+        $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Comment');
 
         if ($comment = $req->fetch())
         {
