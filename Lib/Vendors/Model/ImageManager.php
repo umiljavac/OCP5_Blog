@@ -36,6 +36,9 @@ class ImageManager extends Manager
         $req = $this->db->prepare('SELECT id, blogPostId, serverFile, userFile FROM Image WHERE blogPostId = :blogPostId');
         $req->bindValue(':blogPostId', $blogPostId, \PDO::PARAM_INT);
         $req->execute();
+
+        $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Image');
+
         if ($image = $req->fetch())
         {
             return $image;
@@ -60,6 +63,7 @@ class ImageManager extends Manager
             $req->execute();
         }
         $req->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Image');
+
         $imageList = $req->fetchAll();
 
         $req->closeCursor();

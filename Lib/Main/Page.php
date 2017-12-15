@@ -26,15 +26,14 @@ class Page
         {
             throw new \RuntimeException('La vue spécifiée n\'existe pas');
         }
+
         extract($this->vars());
-
         ob_start();
-        require $this->fileView;
+        require $this->fileView();
         $content = ob_get_clean();
-
         ob_start();
-        require __DIR__.'/../../Templates/layout.php';
-        return ob_get_clean();
+        require __DIR__ . '/../../Templates/layout.php';
+        ob_end_flush();
     }
 
     /***********************************************

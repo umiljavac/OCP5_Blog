@@ -19,7 +19,7 @@ class ServerResponse
 
     public function send()
     {
-        exit($this->page->getGeneratedPage());
+        $this->page->getGeneratedPage();
     }
 
     public function addHeader($header)
@@ -38,14 +38,13 @@ class ServerResponse
         $this->page = new Page();
         $this->page->setFileView(__DIR__. '/../../Errors/404.html');
         $this->addHeader('HTTP/1.O NotFound');
-        $this->send();
     }
 
     public function redirectErrorDB()
     {
         $this->page = new Page();
         $this->page->setFileView(__DIR__. '/../../Errors/errorDB.html');
-        $this->send();
+        $this->addHeader('HTTP/1.O NotFound');
     }
 
     public function setPage(Page $page)

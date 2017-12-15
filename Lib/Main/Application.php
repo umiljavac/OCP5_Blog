@@ -7,7 +7,10 @@
  */
 
 /**
- * Class Application
+ * Class Application launch a Router Class that will be able to return the route corresponding to the user request.
+ * That means that after finding the proper route, a Controller is instantiated.
+ * This one will return all the variables needed to complete the view by interacting with model entities.
+ * Then the Application send the requested Page to the user using a ServerResponse class.
  */
 
 namespace Main;
@@ -30,9 +33,20 @@ class Application
 
     public function run()
     {
-        $controller = $this->getController();
-        $controller->execute();
-        $this->serverResponse->setPage($controller->page());
+        if ( null !== ($controller = $this->getController()))
+        {
+            try
+            {
+                $controller->execute();
+                $this->serverResponse->setPage($controller->page());
+            }
+            catch (\RuntimeException $e)
+            {
+                $errorPage = fopen(__DIR__ .'/../../Errors/404.txt', 'a+');
+                fputs($errorPage, date(DATE_RSS) . ' : ' . $e->getMessage() . PHP_EOL);
+                fclose($errorPage);
+            }
+        }
 
         $this->config->parseFile(__DIR__.'/../../Config/homeLinks.xml','link');
         $cv = $this->config->getconfig('cv');
@@ -40,7 +54,7 @@ class Application
         $favicon = $this->config->getconfig('favicon');
 
         $this->serverResponse->page()->addVars(['cv' => $cv, 'favicon' => $favicon, 'user' => $this->user]);
-        $this->serverResponse->send();
+        return $this->serverResponse->send();
     }
 
     public function getController()
@@ -66,23 +80,26 @@ class Application
         try
         {
             $matchedRoute = $router->getRoute($this->userRequest->requestUri());
+            $_GET = array_merge($_GET, $matchedRoute->vars());
+            return new Controller($matchedRoute->view(), $this);
         }
         catch (\RuntimeException $e)
         {
-            if ($e->getCode() == Router::NO_ROUTE)
+            if ($e->getCode() === Router::NO_ROUTE)
             {
-                if ($_SESSION['error'] === 'errorDB')
+                if (isset($_SESSION['error']) && $_SESSION['error'] === 'errorDB')
                 {
                     $_SESSION['error'] = '';
                     $this->serverResponse->redirectErrorDB();
                 }
-               $this->serverResponse->redirect404();
+                else
+                {
+                    $this->serverResponse->redirect404();
+                }
             }
         }
 
-        $_GET = array_merge($_GET, $matchedRoute->vars());
-        return new Controller($matchedRoute->view(), $this);
-
+        return null;
     }
 
     public function userRequest()

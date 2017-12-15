@@ -8,6 +8,8 @@
 
 /**
  * Controller make the connections between the model and the view.
+ * That means that he is able to ask to the model which datas are needed to complete the view.
+ * Then the controller return them to the application.
  */
 
 namespace Main;
@@ -31,7 +33,6 @@ class Controller
         $this->page = new Page();
         $this->setActionView($actionView);
     }
-
 
     /***********************************************
                         EXECUTE
@@ -89,6 +90,7 @@ class Controller
         if (empty($blogPost))
         {
             $this->app->serverResponse()->redirect404();
+            throw new \RuntimeException('le blogPost n\'existe pas');
         }
 
         $imageManager = new ImageManager;
@@ -209,7 +211,7 @@ class Controller
     }
 
     /***********************************************
-    EXECUTE UPDATE
+                    EXECUTE UPDATE
      ***********************************************/
 
     public function executeUpdateBlogPost(UserRequest $userRequest)
@@ -221,6 +223,7 @@ class Controller
         if (empty($blogPost))
         {
             $this->app->serverResponse()->redirect404();
+            throw new \RuntimeException('le blogPost n\'existe pas');
         }
 
         $imageManager = new ImageManager;
@@ -304,6 +307,7 @@ class Controller
         if (empty ($comment))
         {
             $this->app->serverResponse()->redirect404();
+            throw new \RuntimeException('le commentaire n\'existe pas');
         }
 
         $blogPostId = $comment->blogPost();

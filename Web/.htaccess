@@ -4,5 +4,5 @@ RewriteEngine On
 # Alors on ne réécrit pas l'URL.
 # info server Apache version 2.2.31
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ bootstrap.php
+RewriteRule ^(.*)$ index.php
 
