@@ -1,3 +1,4 @@
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4b34bd5c-9200-4064-a183-3762300d70da/mini.png)](https://insight.sensiolabs.com/projects/4b34bd5c-9200-4064-a183-3762300d70da) *
 # OCP5_Blog
 ### Project number 5 of OpenClassrooms "Developpeur d'application PHP / Symfony" cursus.
 The aim of the project is to create a simple blog where everybody can add, update and delete contents.  
