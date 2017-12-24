@@ -3,7 +3,7 @@
 The aim of the project is to create a simple blog where everybody can add, update and delete contents.  
 Except for the Bootstrap theme [Freelancer](https://bit.ly/2emOTxY), and [jQuery](https://jquery.com/), there's no other library or framework used here.  
 ### Download
-Make sure that you're on the master or production-1.0 branch.   
+Make sure that you're on the master or production-1.1 branch.   
 Click on **`Clone or download`** green button. 
 ### Installation 
 Make your web server pointing to the **Web** directory inside the **OCP5_Blog** directory.  
