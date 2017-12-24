@@ -19,16 +19,14 @@ use Main\Manager;
 
 class CommentManager extends Manager
 {
-    public function insert(Comment $comment)
+    public function insert()
     {
         $req = $this->db->prepare('INSERT INTO Comment SET id = NULL, blogPost = :blogPost, auteur = :auteur, contenu = :contenu, dateAjout = NOW(), dateModif = NOW()');
-        $req->bindValue(':blogPost', $comment->blogPost(), \PDO::PARAM_INT);
-        $req->bindValue(':auteur', $comment->auteur());
-        $req->bindValue(':contenu', $comment->contenu());
+        $req->bindValue(':blogPost', $this->entity->blogPost(), \PDO::PARAM_INT);
+        $req->bindValue(':auteur', $this->entity->auteur());
+        $req->bindValue(':contenu', $this->entity->contenu());
 
         $req->execute();
-
-        $comment->setId($this->db->lastInsertId()); // à vérifier
     }
 
     public function getUnique($id)
@@ -49,12 +47,12 @@ class CommentManager extends Manager
         }
     }
 
-    public function update(Comment $comment)
+    public function update()
     {
         $req = $this->db->prepare('UPDATE Comment SET auteur = :auteur, contenu = :contenu, dateModif = NOW() WHERE id = :id');
-        $req->bindValue(':auteur', $comment->auteur());
-        $req->bindValue(':contenu', $comment->contenu());
-        $req->bindValue(':id', $comment->id(), \PDO::PARAM_INT );
+        $req->bindValue(':auteur', $this->entity->auteur());
+        $req->bindValue(':contenu', $this->entity->contenu());
+        $req->bindValue(':id', $this->entity->id(), \PDO::PARAM_INT );
 
         $req->execute();
     }
@@ -88,5 +86,10 @@ class CommentManager extends Manager
     public function count($id)
     {
         return $this->db->query('SELECT COUNT(*) FROM Comment WHERE blogPost = ' . (int) $id)->fetchColumn();
+    }
+
+    public function setEntity(Comment $comment)
+    {
+        $this->entity = $comment;
     }
 }

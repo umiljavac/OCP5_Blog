@@ -9,7 +9,6 @@
 /**
  *Abstract class Entity implements ArrayAccess interface
  * used as parent class of BlogPost, Image, Comment classes.
- * The constructor need an array of data and use it's hydrate function to set the properties of the instance of the inherited class
  */
 
 namespace Main;
@@ -18,28 +17,7 @@ namespace Main;
 abstract class Entity implements \ArrayAccess
 {
     protected $id;
-    protected $erreurs = [];
-
-    public function __construct(array $data = [])
-    {
-        if (!empty($data)) {
-            $this->hydrate($data);
-        }
-    }
-
-    public function hydrate($data)
-    {
-        foreach ($data as $key => $value)
-        {
-            $method = 'set'. ucfirst($key);
-
-            if (is_callable([$this, $method]))
-            {
-                $this->$method($value);
-            }
-        }
-    }
-
+    protected $errors = [];
 
     public function isNew()
     {
@@ -64,9 +42,9 @@ abstract class Entity implements \ArrayAccess
         return $this->id;
     }
 
-    public function erreurs()
+    public function errors()
     {
-        return $this->erreurs;
+        return $this->errors;
     }
 
    public function offsetGet($var)

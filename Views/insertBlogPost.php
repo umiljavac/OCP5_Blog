@@ -25,12 +25,12 @@
             <div class="form-group">
                 <label for="categorie">Catégorie : </label>
                 <select id="categorie" name="categorie" class="form-control">
-                    <option value="actu">Actu</option>
-                    <option value="litterature">Littérature</option>
-                    <option value="musique">Musique</option>
-                    <option value="programmation">Programmation</option>
-                    <option value="science">Science</option>
-                    <option value="societe">Société</option>
+                    <?php
+                    foreach ($selectOptions as $value => $label)
+                    { ?>
+                        <option value="<?=$value?>"><?=$label?></option>
+                        <?php
+                    } ?>
                 </select>
             </div>
             <div class="form-group">
@@ -39,7 +39,7 @@
                 <input type="file" name="image">
             </div>
             <button class="btn envoyer" type="submit">Ajouter</button>
-            <p class="asterisque">* l'astérisque a horreur du vide</p>
+            <p id="test" class="asterisque">* l'astérisque a horreur du vide</p>
         </form>
     </div>
 </div>

@@ -18,10 +18,28 @@ namespace Main;
 abstract class Manager
 {
     protected $db;
+    protected $entity;
 
     public function __construct()
     {
         $daoFactory = new DAOFactory();
         $this->db = $daoFactory->getMysqlConnectionWithPDO();
+    }
+
+    public function hydrate(array $data)
+    {
+        foreach ($data as $key => $value)
+        {
+            $method = 'set' . ucfirst($key);
+            if (is_callable([$this->entity, $method]))
+            {
+                $this->entity->$method($value);
+            }
+        }
+    }
+
+    public function entity()
+    {
+        return $this->entity;
     }
 }
