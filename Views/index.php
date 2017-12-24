@@ -17,12 +17,12 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="/index/p1/cat/actu.html">Actu</a></li>
-                        <li><a href="/index/p1/cat/litterature.html">Littérature</a></li>
-                        <li><a href="/index/p1/cat/musique.html">Musique</a></li>
-                        <li><a href="/index/p1/cat/programmation.html">Programmation</a></li>
-                        <li><a href="/index/p1/cat/science.html">Science</a></li>
-                        <li><a href="/index/p1/cat/societe.html">Société</a></li>
+                        <?php
+                        foreach ($selectOptions as $value => $label)
+                        { ?>
+                            <li><a href="/index/p1/cat/<?=$value?>.html"><?=$label?></a></li>
+                            <?php
+                        } ?>
                         <li role="separator" class="divider"></li>
                         <li><a href="/index/p1/cat/all.html">Toutes..</a></li>
                     </ul>

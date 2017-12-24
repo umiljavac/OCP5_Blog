@@ -18,36 +18,29 @@ use Main\Manager;
 
 class BlogPostManager extends Manager
 {
-    public function insert(BlogPost $blogPost)
+    public function insert()
     {
-        if($blogPost->isNew())
-        {
             $req = $this->db->prepare('INSERT INTO BlogPost SET id = NULL , titre = :titre, auteur = :auteur, chapo = :chapo, contenu = :contenu, dateAjout = NOW(), dateModif = NOW(), categorie = :categorie');
 
-            $req->bindValue(':titre', $blogPost->titre());
-            $req->bindValue(':auteur', $blogPost->auteur());
-            $req->bindValue(':chapo', $blogPost->chapo());
-            $req->bindValue(':contenu', $blogPost->contenu());
-            $req->bindValue(':categorie', $blogPost->categorie());
+            $req->bindValue(':titre', $this->entity->titre());
+            $req->bindValue(':auteur', $this->entity->auteur());
+            $req->bindValue(':chapo', $this->entity->chapo());
+            $req->bindValue(':contenu', $this->entity->contenu());
+            $req->bindValue(':categorie', $this->entity->categorie());
 
             $req->execute();
-        }
-        else
-        {
-            return;
-        }
     }
 
-    public function update(BlogPost $blogPost)
+    public function update()
     {
         $req = $this->db->prepare('UPDATE BlogPost SET titre = :titre, auteur = :auteur, chapo = :chapo, contenu = :contenu, dateModif = NOW(), categorie = :categorie WHERE id = :id');
 
-        $req->bindValue(':titre', $blogPost->titre());
-        $req->bindValue(':auteur', $blogPost->auteur());
-        $req->bindValue(':chapo', $blogPost->chapo());
-        $req->bindValue(':contenu', $blogPost->contenu());
-        $req->bindValue(':categorie', $blogPost->categorie());
-        $req->bindValue(':id', $blogPost->id(), \PDO::PARAM_INT);
+        $req->bindValue(':titre', $this->entity->titre());
+        $req->bindValue(':auteur', $this->entity->auteur());
+        $req->bindValue(':chapo', $this->entity->chapo());
+        $req->bindValue(':contenu', $this->entity->contenu());
+        $req->bindValue(':categorie', $this->entity->categorie());
+        $req->bindValue(':id', $this->entity->id(), \PDO::PARAM_INT);
 
         $req->execute();
     }
@@ -120,5 +113,10 @@ class BlogPostManager extends Manager
     public function lastInsertId()
     {
         return $this->db->query('SELECT id FROM BlogPost WHERE id = LAST_INSERT_ID()')->fetchColumn();
+    }
+
+    public function setEntity(BlogPost $blogPost)
+    {
+        $this->entity = $blogPost;
     }
 }

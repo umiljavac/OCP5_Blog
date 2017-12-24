@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- add new category for blogpost in the value field of select tag with no spacing and separated by a coma -->
+<preferences>
+    <select var="option" value="Actu,Littérature,Musique,Programmation,Science,Société"></select>
+</preferences>
+

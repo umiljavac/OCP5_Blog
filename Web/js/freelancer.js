@@ -57,3 +57,4 @@ for (var i = 0; i < boutons.length; i++) {
         btn.border = "none";
     }
 }
+

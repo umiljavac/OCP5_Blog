@@ -44,7 +44,7 @@ class Comment extends Entity
     {
         if(!is_string($auteur) || empty($auteur))
         {
-            $this->erreurs[] = self::AUTEUR_INVALIDE;
+            $this->errors[] = self::AUTEUR_INVALIDE;
         }
 
         $this->auteur = $auteur;
@@ -54,7 +54,7 @@ class Comment extends Entity
     {
         if(!is_string($contenu) || empty($contenu))
         {
-            $this->erreurs[] = self::CONTENU_INVALIDE;
+            $this->errors[] = self::CONTENU_INVALIDE;
         }
 
         $this->contenu = $contenu;

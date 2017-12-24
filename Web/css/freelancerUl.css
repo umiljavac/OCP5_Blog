@@ -391,9 +391,13 @@ footer .footer-below {
 }
 .titre {
     font-size: 2.5em;
+    color: #cc9933 !important;
+    margin: 35px 0;
 }
 .auteurBlogPost {
     font-size: 1.2em;
+    color: cadetblue !important;
+
 }
 .auteurCommentaire {
     font-size: 1em;
@@ -664,5 +668,6 @@ footer .footer-below {
 .asterisque {
     font-size: 0.8em;
 }
+
 
 

@@ -35,7 +35,6 @@ class BlogPost extends Entity
         return !(empty($this->auteur) || empty($this->contenu) || empty($this->titre) || empty($this->chapo));
     }
 
-
     /***********************************************
                         SETTERS
      ***********************************************/
@@ -44,7 +43,7 @@ class BlogPost extends Entity
     {
         if(!is_string($titre) || empty($titre))
         {
-            $this->erreurs[] = self::TITRE_INVALIDE;
+            $this->errors[] = self::TITRE_INVALIDE;
         }
 
         $this->titre = $titre;
@@ -54,7 +53,7 @@ class BlogPost extends Entity
     {
         if(!is_string($chapo) || empty($chapo))
         {
-            $this->erreurs[] = self::CHAPO_INVALIDE;
+            $this->errors[] = self::CHAPO_INVALIDE;
         }
 
         $this->chapo = $chapo;
@@ -69,7 +68,7 @@ class BlogPost extends Entity
     {
         if(!is_string($auteur) || empty($auteur))
         {
-            $this->erreurs[] = self::AUTEUR_INVALIDE;
+            $this->errors[] = self::AUTEUR_INVALIDE;
         }
 
         $this->auteur = $auteur;
@@ -79,7 +78,7 @@ class BlogPost extends Entity
     {
         if(!is_string($contenu) || empty($contenu))
         {
-            $this->erreurs[] = self::CONTENU_INVALIDE;
+            $this->errors[] = self::CONTENU_INVALIDE;
         }
 
         $this->contenu = $contenu;

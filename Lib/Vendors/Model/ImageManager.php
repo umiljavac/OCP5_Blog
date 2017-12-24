@@ -19,16 +19,18 @@ use Entity\Image;
 
 class ImageManager extends Manager
 {
-    public function insert(Image $image)
+    public function insert()
     {
         $req = $this->db->prepare('INSERT INTO Image SET id = NULL, blogPostId = :blogPostId, userFile = :userFile, extension = :extension, serverFile = :serverFile, size = :size');
-        $req->bindValue(':blogPostId', $image->blogPostId(), \PDO::PARAM_INT);
-        $req->bindValue(':userFile', $image->userFile(), \PDO::PARAM_STR);
-        $req->bindValue(':extension', $image->extension(), \PDO::PARAM_STR);
-        $req->bindValue(':serverFile', $image->serverFile(), \PDO::PARAM_STR);
-        $req->bindValue(':size', $image->size(), \PDO::PARAM_STR);
+        $req->bindValue(':blogPostId', $this->entity->blogPostId(), \PDO::PARAM_INT);
+        $req->bindValue(':userFile', $this->entity->userFile(), \PDO::PARAM_STR);
+        $req->bindValue(':extension', $this->entity->extension(), \PDO::PARAM_STR);
+        $req->bindValue(':serverFile', $this->entity->serverFile(), \PDO::PARAM_STR);
+        $req->bindValue(':size', $this->entity->size(), \PDO::PARAM_STR);
 
         $req->execute();
+
+        move_uploaded_file($_FILES[Image::UPLOAD]['tmp_name'], Image::IMG_DIR . $this->entity->serverFile());
     }
 
     public function getUnique($blogPostId)
@@ -70,16 +72,28 @@ class ImageManager extends Manager
         return $imageList;
     }
 
-    public function update(Image $image)
+    public function update()
     {
         $req = $this->db->prepare('UPDATE Image set userFile = :userFile, extension = :extension, serverFile = :serverFile, size = :size WHERE id = :id');
 
-        $req->bindValue(':userFile', $image->userFile(), \PDO::PARAM_STR);
-        $req->bindValue(':extension', $image->extension(), \PDO::PARAM_STR);
-        $req->bindValue(':serverFile', $image->serverFile(), \PDO::PARAM_STR);
-        $req->bindValue(':size', $image->size(), \PDO::PARAM_INT);
-        $req->bindValue(':id', $image->id(), \PDO::PARAM_INT);
+        $req->bindValue(':userFile', $this->entity->userFile(), \PDO::PARAM_STR);
+        $req->bindValue(':extension', $this->entity->extension(), \PDO::PARAM_STR);
+        $req->bindValue(':serverFile', $this->entity->serverFile(), \PDO::PARAM_STR);
+        $req->bindValue(':size', $this->entity->size(), \PDO::PARAM_INT);
+        $req->bindValue(':id', $this->entity->id(), \PDO::PARAM_INT);
 
         $req->execute();
+
+        move_uploaded_file($_FILES[Image::UPLOAD]['tmp_name'], Image::IMG_DIR . $this->entity->serverFile());
+    }
+
+    public function deleteImageFile ($serverFileImage)
+    {
+        unlink(Image::IMG_DIR.$serverFileImage);
+    }
+
+    public function setEntity(Image $image)
+    {
+        $this->entity = $image;
     }
 }

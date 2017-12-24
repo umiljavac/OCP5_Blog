@@ -69,7 +69,7 @@ class Image extends Entity
         }
         else
         {
-            $this->erreurs[] = self::ERROR_PATH;
+            $this->errors[] = self::ERROR_PATH;
         }
     }
 
@@ -82,7 +82,7 @@ class Image extends Entity
         }
         else
         {
-            $this->erreurs[] = self::ERROR_FILE_TYPE;
+            $this->errors[] = self::ERROR_FILE_TYPE;
         }
 
     }
@@ -103,7 +103,7 @@ class Image extends Entity
         $error = isset($_FILES[self::UPLOAD]['error']) ? $_FILES[self::UPLOAD]['error'] : null;
         if ( $error === 2)
         {
-            $this->erreurs[] = self::MAX_SIZE_REACHED;
+            $this->errors[] = self::MAX_SIZE_REACHED;
         }
         else
         {
