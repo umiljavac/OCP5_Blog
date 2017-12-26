@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-lg-2 col-md-3 bp-info">
                     <div class="col-sm-12 cat text-center ">
-                        <span><?= $blogPost['categorie'] ?></span>
+                        <span><?= str_replace('-', ' ',$blogPost['categorie']) ?></span>
                     </div>
                     <div class="bp-date col-sm-12 text-center">
                         <p class="dateBlogPostList "><?='le '.$blogPost->dateAjout()->format('d/m/Y à H\hi')?></p>

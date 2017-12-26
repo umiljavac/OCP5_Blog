@@ -35,16 +35,16 @@ class Application
     {
         if ( null !== ($controller = $this->getController()))
         {
-            try
+           try
             {
                 $controller->execute();
                 $this->serverResponse->setPage($controller->page());
             }
+
             catch (\RuntimeException $e)
             {
-                $errorPage = fopen(__DIR__ .'/../../Errors/404.txt', 'a+');
-                fputs($errorPage, date(DATE_RSS) . ' : ' . $e->getMessage() . PHP_EOL);
-                fclose($errorPage);
+               $this->config->writeError($e);
+               $this->serverResponse->redirect404();
             }
         }
 
@@ -54,6 +54,7 @@ class Application
         $favicon = $this->config->getconfig('favicon');
 
         $this->serverResponse->page()->addVars(['cv' => $cv, 'favicon' => $favicon, 'user' => $this->user]);
+
         return $this->serverResponse->send();
     }
 
@@ -87,16 +88,22 @@ class Application
         {
             if ($e->getCode() === Router::NO_ROUTE)
             {
-                if (isset($_SESSION['error']) && $_SESSION['error'] === 'errorDB')
+                if ($this->userRequest->requestUri() === '/Errors/errorDB.html')
                 {
-                    $_SESSION['error'] = '';
                     $this->serverResponse->redirectErrorDB();
                 }
                 else
                 {
+                    $this->config->writeError($e);
                     $this->serverResponse->redirect404();
                 }
             }
+        }
+
+        catch (\InvalidArgumentException $e)
+        {
+            $this->config->writeError($e);
+            $this->serverResponse->redirect404();
         }
 
         return null;

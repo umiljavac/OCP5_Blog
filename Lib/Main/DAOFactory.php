@@ -36,11 +36,8 @@ class DAOFactory
         }
         catch (\PDOException $e)
         {
-            $errorDB = fopen(__DIR__ .'/../../Errors/errorDB.txt', 'a+');
-            fputs($errorDB, date(DATE_RSS) . ' : ' . $e->getMessage() . PHP_EOL);
-            fclose($errorDB);
-            $_SESSION['error'] = 'errorDB';
-            header('Location: /Errors/errorDB.html');
+           $this->config->writeError($e);
+           header('Location: /Errors/errorDB.html');
         }
     }
 }

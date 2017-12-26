@@ -2,7 +2,7 @@
     <div class="container">
         <div class="divLogo-min text-center">
             <img class="logoBody" src="/img/logo3minAlt.png" alt="logo"><br />
-            <span class="blogPostCat"><?= $blogPost['categorie'] ?></span>
+            <span class="blogPostCat"><?=str_replace('-', ' ', $blogPost['categorie']) ?></span>
         </div>
         <div class="text-center">
         <?php
