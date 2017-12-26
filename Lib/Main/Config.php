@@ -87,7 +87,7 @@ class Config
         return ($url);
     }
 
-    public function writeError($e)
+    public function writeError(\Exception $e)
     {
         $errorPage = fopen(__DIR__ . '/../../Errors/errors.txt', 'a+');
         fputs($errorPage, date(DATE_RSS) . ' : ' . $e->getMessage() . PHP_EOL);
