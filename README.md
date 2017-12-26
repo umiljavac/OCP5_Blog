@@ -13,5 +13,5 @@ So, if needed, go to **OCP5_Blog/Config/dbConnection.xml** and configure your co
   
 That's all ! 
 
-* Code analysis by SensioLabsInsight (with one rewritted rule concerning the favicon. Favicon.ico is present but the analyse never find it... it drove me crazy, but I'm sill learning, so :)  
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4b34bd5c-9200-4064-a183-3762300d70da/big.png)](https://insight.sensiolabs.com/projects/4b34bd5c-9200-4064-a183-3762300d70da)
+* Code analysis by SensioLabsInsight (with one rewritted rule concerning the favicon. Favicon.ico is present but the analyse never find it... it drove me crazy, but I'm sill learning :)  
+https://insight.sensiolabs.com/projects/4b34bd5c-9200-4064-a183-3762300d70da/big.png
