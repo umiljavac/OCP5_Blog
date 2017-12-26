@@ -86,4 +86,11 @@ class Config
         $url = strtolower($url);
         return ($url);
     }
+
+    public function writeError($e)
+    {
+        $errorPage = fopen(__DIR__ . '/../../Errors/errors.txt', 'a+');
+        fputs($errorPage, date(DATE_RSS) . ' : ' . $e->getMessage() . PHP_EOL);
+        fclose($errorPage);
+    }
 }
