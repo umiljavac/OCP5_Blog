@@ -92,7 +92,6 @@ class Controller
 
         if (empty($blogPost))
         {
-            $this->app->serverResponse()->redirect404();
             throw new \RuntimeException('le blogPost n\'existe pas');
         }
 
@@ -224,7 +223,6 @@ class Controller
 
         if (empty($blogPost))
         {
-            $this->app->serverResponse()->redirect404();
             throw new \RuntimeException('le blogPost n\'existe pas');
         }
 
@@ -307,7 +305,6 @@ class Controller
 
         if (empty ($comment))
         {
-            $this->app->serverResponse()->redirect404();
             throw new \RuntimeException('le commentaire n\'existe pas');
         }
 
